@@ -1,0 +1,25 @@
+.navbar {
+    grid-area: n;
+    background-color: burlywood;
+    border-color: black;
+    border-style: solid;
+    padding: 10px;
+}
+
+.item a {
+    text-decoration: none;
+    color: white;
+}
+
+.item:hover {
+    background-color: peru;
+}
+
+.item a:hover {
+    text-decoration: underline;
+    color: brown;
+}
+
+.navbar .active {
+    color: brown;
+}

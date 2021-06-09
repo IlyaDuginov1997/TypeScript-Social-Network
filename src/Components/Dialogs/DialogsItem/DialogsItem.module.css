@@ -1,0 +1,8 @@
+.dialogsItem a {
+    color: sienna;
+    text-decoration: none;
+}
+
+.dialogsItem .active {
+    color: black;
+}
