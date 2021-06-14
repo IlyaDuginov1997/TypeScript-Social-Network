@@ -30,72 +30,77 @@ export type RootStateType = {
     dialogComponent: DialogComponentType
 }
 
+export type StoreType = {
+    _state: RootStateType
+    callback: () => void
+    observe: (observer: () => void) => void
+    changePostEL: (el: string) => void
+    addPost: () => void
+    changeMessageEl: (el: string) => void
+    addMessage: () => void
+    getState: () => RootStateType
+}
 
-export const state = {
-    profileComponent: {
-        posts: [
-            {id: 1, message: 'Hello, my name is Ilya', likesCount: 34},
-            {id: 2, message: 'Hey, it is my second post', likesCount: 12},
-            {id: 3, message: 'Sorry for my english', likesCount: 105},
-            {id: 4, message: 'I love your likes', likesCount: 65},
-        ],
-        newPostText: ''
+export const store: StoreType = {
+    _state: {
+        profileComponent: {
+            posts: [
+                {id: 1, message: 'Hello, my name is Ilya', likesCount: 34},
+                {id: 2, message: 'Hey, it is my second post', likesCount: 12},
+                {id: 3, message: 'Sorry for my english', likesCount: 105},
+                {id: 4, message: 'I love your likes', likesCount: 65},
+            ],
+            newPostText: ''
+        },
+        dialogComponent: {
+            dialogs: [
+                {id: 1, name: 'Nastya'},
+                {id: 2, name: 'Gleb'},
+                {id: 3, name: 'Anton'},
+                {id: 4, name: 'Denis'},
+                {id: 5, name: 'Kostya'},
+            ],
+            messages: [
+                {id: 1, message: 'Hello, my name is Ilya'},
+                {id: 2, message: 'I am fine'},
+                {id: 3, message: 'Yo'},
+            ],
+            newMessageText: ''
+        },
     },
-    dialogComponent: {
-        dialogs: [
-            {id: 1, name: 'Nastya'},
-            {id: 2, name: 'Gleb'},
-            {id: 3, name: 'Anton'},
-            {id: 4, name: 'Denis'},
-            {id: 5, name: 'Kostya'},
-        ],
-        messages: [
-            {id: 1, message: 'Hello, my name is Ilya'},
-            {id: 2, message: 'I am fine'},
-            {id: 3, message: 'Yo'},
-        ],
-        newMessageText: ''
-    }
-}
-
-let rerenderEntireTree = () => {
-    console.log('hello')
-}
-
-export const observe = (observer: () => void) => {
-    rerenderEntireTree = observer
-}
-
-export function changePostEL(el: string) {
-    state.profileComponent.newPostText = el
-    console.log(el)
-    rerenderEntireTree()
-}
-
-export function addPost() {
-    let newPost = {
-        id: 5,
-        message: state.profileComponent.newPostText,
-        likesCount: 17
-    }
-    state.profileComponent.posts.push(newPost)
-    state.profileComponent.newPostText = ''
-    rerenderEntireTree()
-}
-
-
-export function changeMessageEl(el: string) {
-    state.dialogComponent.newMessageText = el
-    console.log(el)
-    rerenderEntireTree()
-}
-
-export function addMessage() {
-    let newMessageEl = {
-        id: 5,
-        message: state.dialogComponent.newMessageText,
-    }
-    state.dialogComponent.messages.push(newMessageEl)
-    state.dialogComponent.newMessageText = ''
-    rerenderEntireTree()
+    callback() {
+    },
+    observe(observer: () => void) {
+        this.callback = observer
+    },
+    changePostEL(el: string) {
+        this._state.profileComponent.newPostText = el
+        this.callback()
+    },
+    addPost() {
+        let newPost = {
+            id: 5,
+            message: this._state.profileComponent.newPostText,
+            likesCount: 17
+        }
+        this._state.profileComponent.posts.push(newPost)
+        this._state.profileComponent.newPostText = ''
+        this.callback()
+            },
+    changeMessageEl(el: string) {
+        this._state.dialogComponent.newMessageText = el
+        this.callback()
+    },
+    addMessage() {
+        let newMessageEl = {
+            id: 5,
+            message: this._state.dialogComponent.newMessageText,
+        }
+        this._state.dialogComponent.messages.push(newMessageEl)
+        this._state.dialogComponent.newMessageText = ''
+        this.callback()
+    },
+    getState() {
+        return this._state
+    },
 }
