@@ -2,12 +2,11 @@ import React from 'react';
 import classes from './Dialogs.module.css';
 import DialogsItem from './DialogsItem/DialogsItem';
 import MessageItem from './MessageItem/MessageItem';
-import {DialogComponentType} from '../../Redux/State';
+import {DialogComponentType, DispatchActionType} from '../../Redux/State';
 
 type DialogsType = {
     dialogsState: DialogComponentType
-    changeMessageEl: (el: string) => void,
-    addMessage: () => void
+    dispatch: (action: DispatchActionType) => void
 }
 
 function Dialogs(props: DialogsType) {
@@ -22,12 +21,15 @@ function Dialogs(props: DialogsType) {
     let newMessageEl = React.createRef<HTMLTextAreaElement>()
     const addMessage = () => {
         if (newMessageEl.current) {
-            props.addMessage()
+            props.dispatch({type: 'ADD-NEW-MESSAGE'})
         }
     }
     const addMessageEl = () => {
         if (newMessageEl.current) {
-            props.changeMessageEl(newMessageEl.current?.value)
+            props.dispatch({
+                type: 'CHANGE-MESSAGE-EL',
+                messageEl: newMessageEl.current?.value
+            })
         }
     }
 
@@ -40,7 +42,8 @@ function Dialogs(props: DialogsType) {
             <div className={classes.message}>
                 <button onClick={addMessage}>Add message</button>
                 <div>
-                    <textarea value={props.dialogsState.newMessageText} ref={newMessageEl} onChange={addMessageEl}></textarea>
+                    <textarea value={props.dialogsState.newMessageText} ref={newMessageEl}
+                              onChange={addMessageEl}></textarea>
                 </div>
                 {messagesItem}
             </div>

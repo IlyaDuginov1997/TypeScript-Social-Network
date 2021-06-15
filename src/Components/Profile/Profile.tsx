@@ -2,12 +2,11 @@ import React from 'react';
 import classes from './Profile.module.css'
 import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
-import {PostsType} from '../../Redux/State';
+import {DispatchActionType, PostsType} from '../../Redux/State';
 
 type ProfileType = {
     posts: Array<PostsType>
-    addPost: () => void
-    changePostEL: (el: string) => void
+    dispatch: (action: DispatchActionType) => void
     newPostText: string
 }
 
@@ -17,9 +16,9 @@ function Profile(props: ProfileType) {
         <div className={classes.content}>
             <ProfileInfo/>
             <MyPosts posts={props.posts}
-                     addPost={props.addPost}
+                     dispatch={props.dispatch}
                      newPostText={props.newPostText}
-                     changePostEL={props.changePostEL}/>
+                     />
         </div>
     );
 }

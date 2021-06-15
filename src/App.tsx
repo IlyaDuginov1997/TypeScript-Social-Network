@@ -8,14 +8,15 @@ import {Route} from 'react-router-dom';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
-import {RootStateType} from './Redux/State';
+import {DispatchActionType, RootStateType} from './Redux/State';
 
 type AppType = {
     state: RootStateType
-    changePostEL: (el: string) => void,
-    addPost: () => void,
-    changeMessageEl: (el: string) => void,
-    addMessage: () => void
+    // changePostEL: (el: string) => void,
+    // addPost: () => void,
+    // changeMessageEl: (el: string) => void,
+    // addMessage: () => void
+    dispatch: (action: DispatchActionType) => void
 }
 
 const App = (props: AppType) => {
@@ -31,13 +32,12 @@ const App = (props: AppType) => {
                 <Route path={'/profile'}
                        render={() => <Profile posts={posts}
                                               newPostText={props.state.profileComponent.newPostText}
-                                              addPost={props.addPost}
-                                              changePostEL={props.changePostEL}/>}/>
+                                              dispatch={props.dispatch}
+                                              />}/>
 
                 <Route path={'/dialogs'}
                        render={() => <Dialogs dialogsState={dialogsState}
-                                              addMessage={props.addMessage}
-                                              changeMessageEl={props.changeMessageEl}/>}/>
+                                              dispatch={props.dispatch}/>}/>
 
                 <Route path={'/news'} render={() => <News/>}/>
                 <Route path={'/music'} render={() => <Music/>}/>

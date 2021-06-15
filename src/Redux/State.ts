@@ -30,15 +30,37 @@ export type RootStateType = {
     dialogComponent: DialogComponentType
 }
 
+export type DispatchActionType = AddNewPostType | ChangePostELType | AddMessageType | ChangeMessageELType
+
+export type AddNewPostType = {
+    type: 'ADD-NEW-POST'
+}
+
+export type ChangePostELType = {
+    type: 'CHANGE-POST-EL'
+    postEl: string
+}
+
+export type AddMessageType = {
+    type: 'ADD-NEW-MESSAGE'
+}
+
+export type ChangeMessageELType = {
+    type: 'CHANGE-MESSAGE-EL'
+    messageEl: string
+}
+
+
 export type StoreType = {
     _state: RootStateType
     callback: () => void
     observe: (observer: () => void) => void
-    changePostEL: (el: string) => void
-    addPost: () => void
-    changeMessageEl: (el: string) => void
-    addMessage: () => void
+    // changePostEL: (el: string) => void
+    // addPost: () => void
+    // changeMessageEl: (el: string) => void
+    // addMessage: () => void
     getState: () => RootStateType
+    dispatch: (action: DispatchActionType) => void
 }
 
 export const store: StoreType = {
@@ -73,34 +95,62 @@ export const store: StoreType = {
     observe(observer: () => void) {
         this.callback = observer
     },
-    changePostEL(el: string) {
-        this._state.profileComponent.newPostText = el
-        this.callback()
-    },
-    addPost() {
-        let newPost = {
-            id: 5,
-            message: this._state.profileComponent.newPostText,
-            likesCount: 17
-        }
-        this._state.profileComponent.posts.push(newPost)
-        this._state.profileComponent.newPostText = ''
-        this.callback()
-            },
-    changeMessageEl(el: string) {
-        this._state.dialogComponent.newMessageText = el
-        this.callback()
-    },
-    addMessage() {
-        let newMessageEl = {
-            id: 5,
-            message: this._state.dialogComponent.newMessageText,
-        }
-        this._state.dialogComponent.messages.push(newMessageEl)
-        this._state.dialogComponent.newMessageText = ''
-        this.callback()
-    },
+
+    // changePostEL(el: string) {
+    //     this._state.profileComponent.newPostText = el
+    //     this.callback()
+    // },
+    // addPost() {
+    //     let newPost = {
+    //         id: 5,
+    //         message: this._state.profileComponent.newPostText,
+    //         likesCount: 17
+    //     }
+    //     this._state.profileComponent.posts.push(newPost)
+    //     this._state.profileComponent.newPostText = ''
+    //     this.callback()
+    // },
+    // changeMessageEl(el: string) {
+    //     this._state.dialogComponent.newMessageText = el
+    //     this.callback()
+    // },
+    // addMessage() {
+    //     let newMessageEl = {
+    //         id: 5,
+    //         message: this._state.dialogComponent.newMessageText,
+    //     }
+    //     this._state.dialogComponent.messages.push(newMessageEl)
+    //     this._state.dialogComponent.newMessageText = ''
+    //     this.callback()
+    // },
+
     getState() {
         return this._state
     },
+    dispatch(action) {
+        if (action.type === 'CHANGE-POST-EL') {
+            this._state.profileComponent.newPostText = action.postEl
+            this.callback()
+        } else if (action.type === 'ADD-NEW-POST') {
+            let newPost = {
+                id: 5,
+                message: this._state.profileComponent.newPostText,
+                likesCount: 17
+            }
+            this._state.profileComponent.posts.push(newPost)
+            this._state.profileComponent.newPostText = ''
+            this.callback()
+        } else if (action.type === 'CHANGE-MESSAGE-EL') {
+            this._state.dialogComponent.newMessageText = action.messageEl
+            this.callback()
+        } else if (action.type === 'ADD-NEW-MESSAGE') {
+            let newMessageEl = {
+                id: 5,
+                message: this._state.dialogComponent.newMessageText,
+            }
+            this._state.dialogComponent.messages.push(newMessageEl)
+            this._state.dialogComponent.newMessageText = ''
+            this.callback()
+        }
+    }
 }
