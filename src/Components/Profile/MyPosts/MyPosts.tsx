@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './MyPosts.module.css'
 import Post from './Post/Post';
-import {DispatchActionType, PostsType} from '../../../Redux/State';
+import {AddPostActionCreator, AddPostElActionCreator, DispatchActionType, PostsType} from '../../../Redux/State';
 
 type MyPostsPropsType = {
     posts: Array<PostsType>
@@ -20,17 +20,13 @@ function MyPosts(props: MyPostsPropsType) {
 
     const addPost = () => {
         if (newPostEl.current) {
-            props.dispatch({type: 'ADD-NEW-POST'})
+            props.dispatch(AddPostActionCreator())
         }
     }
 
-    const onPostChange = () => {
+    const addPostEl = () => {
         if (newPostEl.current) {
-            props.dispatch({
-                    type: 'CHANGE-POST-EL',
-                    postEl: newPostEl.current?.value
-                }
-            )
+            props.dispatch(AddPostElActionCreator(newPostEl.current?.value))
         }
     }
 
@@ -38,7 +34,7 @@ function MyPosts(props: MyPostsPropsType) {
         <div>
             My posts
             <div>
-                <textarea value={props.newPostText} ref={newPostEl} onChange={onPostChange}></textarea>
+                <textarea value={props.newPostText} ref={newPostEl} onChange={addPostEl}></textarea>
                 <div>
                     <button onClick={addPost}>Add post</button>
                 </div>

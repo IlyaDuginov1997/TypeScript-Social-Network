@@ -2,7 +2,12 @@ import React from 'react';
 import classes from './Dialogs.module.css';
 import DialogsItem from './DialogsItem/DialogsItem';
 import MessageItem from './MessageItem/MessageItem';
-import {DialogComponentType, DispatchActionType} from '../../Redux/State';
+import {
+    AddMessageActionCreator,
+    AddMessageElActionCreator,
+    DialogComponentType,
+    DispatchActionType
+} from '../../Redux/State';
 
 type DialogsType = {
     dialogsState: DialogComponentType
@@ -21,15 +26,13 @@ function Dialogs(props: DialogsType) {
     let newMessageEl = React.createRef<HTMLTextAreaElement>()
     const addMessage = () => {
         if (newMessageEl.current) {
-            props.dispatch({type: 'ADD-NEW-MESSAGE'})
+            props.dispatch(AddMessageActionCreator())
         }
     }
     const addMessageEl = () => {
         if (newMessageEl.current) {
-            props.dispatch({
-                type: 'CHANGE-MESSAGE-EL',
-                messageEl: newMessageEl.current?.value
-            })
+            props.dispatch(
+                AddMessageElActionCreator(newMessageEl.current?.value))
         }
     }
 
