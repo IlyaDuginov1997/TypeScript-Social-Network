@@ -3,11 +3,11 @@ import classes from './Dialogs.module.css';
 import DialogsItem from './DialogsItem/DialogsItem';
 import MessageItem from './MessageItem/MessageItem';
 import {
-    AddMessageActionCreator,
-    AddMessageElActionCreator,
+
     DialogComponentType,
     DispatchActionType
 } from '../../Redux/State';
+import {AddMessageActionCreator, AddMessageElActionCreator} from '../../Redux/messageReducer';
 
 type DialogsType = {
     dialogsState: DialogComponentType

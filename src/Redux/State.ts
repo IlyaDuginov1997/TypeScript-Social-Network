@@ -1,3 +1,6 @@
+import {profileReducer} from './profileReducer';
+import {dialogReducer} from './messageReducer';
+
 export type PostsType = {
     id: number
     message: string
@@ -50,7 +53,6 @@ export type ChangeMessageElType = {
     messageEl: string
 }
 
-
 export type StoreType = {
     _state: RootStateType
     callback: () => void
@@ -58,6 +60,7 @@ export type StoreType = {
     getState: () => RootStateType
     dispatch: (action: DispatchActionType) => void
 }
+
 
 export const store: StoreType = {
     _state: {
@@ -96,56 +99,11 @@ export const store: StoreType = {
         return this._state
     },
     dispatch(action) {
-        if (action.type === 'CHANGE-POST-EL') {
-            this._state.profileComponent.newPostText = action.postEl
-            this.callback()
-        } else if (action.type === 'ADD-NEW-POST') {
-            let newPost = {
-                id: 5,
-                message: this._state.profileComponent.newPostText,
-                likesCount: 17
-            }
-            this._state.profileComponent.posts.push(newPost)
-            this._state.profileComponent.newPostText = ''
-            this.callback()
-        } else if (action.type === 'CHANGE-MESSAGE-EL') {
-            this._state.dialogComponent.newMessageText = action.messageEl
-            this.callback()
-        } else if (action.type === 'ADD-NEW-MESSAGE') {
-            let newMessageEl = {
-                id: 5,
-                message: this._state.dialogComponent.newMessageText,
-            }
-            this._state.dialogComponent.messages.push(newMessageEl)
-            this._state.dialogComponent.newMessageText = ''
-            this.callback()
-        }
+        this._state.profileComponent = profileReducer(this._state.profileComponent, action)
+        this._state.dialogComponent = dialogReducer(this._state.dialogComponent, action)
+        this.callback()
     }
 }
 
-
-export function AddPostElActionCreator(postEl: string): ChangePostElType {
-    return {
-        type: 'CHANGE-POST-EL',
-        postEl: postEl
-    }
-}
-
-export function AddPostActionCreator(): AddNewPostType {
-    return {
-        type: 'ADD-NEW-POST',
-    }
-}
-
-export function AddMessageElActionCreator(messageEl: string): ChangeMessageElType {
-    return {
-        type: 'CHANGE-MESSAGE-EL',
-        messageEl: messageEl
-    }
-}
-
-export function AddMessageActionCreator(): AddMessageType {
-    return {
-        type: 'ADD-NEW-MESSAGE',
-    }
-}
+// можно записать вот так и потом использовать этот тип
+// type X = typeof store._state.dialogComponent
