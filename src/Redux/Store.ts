@@ -56,11 +56,15 @@ export type ChangeMessageElType = {
 export type StoreType = {
     _state: RootStateType
     callback: () => void
-    observe: (observer: () => void) => void
+    subscribe: (observer: () => void) => void
     getState: () => RootStateType
     dispatch: (action: DispatchActionType) => void
 }
 
+
+// ниже прописан наш самописный (хар-код) вариант стора, без редакса
+// ............
+// ............
 
 export const store: StoreType = {
     _state: {
@@ -90,8 +94,9 @@ export const store: StoreType = {
         },
     },
     callback() {
+        // заглушка
     },
-    observe(observer: () => void) {
+    subscribe(observer: () => void) {
         this.callback = observer
     },
 

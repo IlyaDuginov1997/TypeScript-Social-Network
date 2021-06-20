@@ -1,6 +1,23 @@
-import {AddMessageType, ChangeMessageElType, DialogComponentType, DispatchActionType} from './State';
+import {AddMessageType, ChangeMessageElType, DialogComponentType, DispatchActionType} from './Store';
 
-export function dialogReducer(state: DialogComponentType, action: DispatchActionType): DialogComponentType {
+let initialState: DialogComponentType = {
+    dialogs: [
+        {id: 1, name: 'Nastya'},
+        {id: 2, name: 'Gleb'},
+        {id: 3, name: 'Anton'},
+        {id: 4, name: 'Denis'},
+        {id: 5, name: 'Kostya'},
+    ],
+    messages: [
+        {id: 1, message: 'Hello, my name is Ilya'},
+        {id: 2, message: 'I am fine'},
+        {id: 3, message: 'Yo'},
+    ],
+    newMessageText: ''
+
+}
+
+export function dialogReducer(state = initialState, action: DispatchActionType): DialogComponentType {
     switch (action.type) {
         case 'CHANGE-MESSAGE-EL':
             state.newMessageText = action.messageEl

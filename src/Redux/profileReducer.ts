@@ -1,6 +1,16 @@
-import {AddNewPostType, ChangePostElType, DispatchActionType, ProfileComponentType} from './State';
+import {AddNewPostType, ChangePostElType, DispatchActionType, ProfileComponentType} from './Store';
 
-export function profileReducer(state: ProfileComponentType, action: DispatchActionType) {
+let initialState: ProfileComponentType = {
+    posts: [
+        {id: 1, message: 'Hello, my name is Ilya', likesCount: 34},
+        {id: 2, message: 'Hey, it is my second post', likesCount: 12},
+        {id: 3, message: 'Sorry for my english', likesCount: 105},
+        {id: 4, message: 'I love your likes', likesCount: 65},
+    ],
+    newPostText: ''
+}
+
+export function profileReducer(state = initialState, action: DispatchActionType): ProfileComponentType {
     switch (action.type) {
         case 'CHANGE-POST-EL':
             state.newPostText = action.postEl
