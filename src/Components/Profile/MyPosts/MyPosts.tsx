@@ -1,13 +1,13 @@
 import React from 'react';
 import classes from './MyPosts.module.css'
 import Post from './Post/Post';
-import {DispatchActionType, PostsType} from '../../../Redux/Store';
-import {AddPostActionCreator, AddPostElActionCreator} from '../../../Redux/profileReducer';
+import {PostsType} from '../../../Redux/Store';
 
 type MyPostsPropsType = {
     posts: Array<PostsType>
-    dispatch: (action: DispatchActionType) => void
     newPostText: string
+    addPost: () => void
+    addPostEl: (text: string) => void
 }
 
 function MyPosts(props: MyPostsPropsType) {
@@ -19,15 +19,15 @@ function MyPosts(props: MyPostsPropsType) {
 
     const newPostEl = React.createRef<HTMLTextAreaElement>()
 
-    const addPost = () => {
+    const onAddPost = () => {
         if (newPostEl.current) {
-            props.dispatch(AddPostActionCreator())
+            props.addPost()
         }
     }
 
     const addPostEl = () => {
         if (newPostEl.current) {
-            props.dispatch(AddPostElActionCreator(newPostEl.current?.value))
+            props.addPostEl(newPostEl.current?.value)
         }
     }
 
@@ -37,7 +37,7 @@ function MyPosts(props: MyPostsPropsType) {
             <div>
                 <textarea value={props.newPostText} ref={newPostEl} onChange={addPostEl}></textarea>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={onAddPost}>Add post</button>
                 </div>
             </div>
             <div className={classes.posts}>

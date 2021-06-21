@@ -1,13 +1,11 @@
 import React from 'react';
 import classes from './Profile.module.css'
-import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
-import {DispatchActionType, PostsType} from '../../Redux/Store';
+import MyPostsContainer from './MyPosts/MyPostsContainer';
+import {ReduxStoreType} from '../../Redux/redux-store';
 
 type ProfileType = {
-    posts: Array<PostsType>
-    dispatch: (action: DispatchActionType) => void
-    newPostText: string
+    store: ReduxStoreType
 }
 
 function Profile(props: ProfileType) {
@@ -15,10 +13,8 @@ function Profile(props: ProfileType) {
     return (
         <div className={classes.content}>
             <ProfileInfo/>
-            <MyPosts posts={props.posts}
-                     dispatch={props.dispatch}
-                     newPostText={props.newPostText}
-                     />
+            <MyPostsContainer store={props.store}
+            />
         </div>
     );
 }
