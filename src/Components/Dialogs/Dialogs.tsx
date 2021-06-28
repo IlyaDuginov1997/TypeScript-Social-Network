@@ -1,8 +1,8 @@
 import React from 'react';
+import { DialogComponentType } from '../../Redux/messageReducer';
 import classes from './Dialogs.module.css';
 import DialogsItem from './DialogsItem/DialogsItem';
 import MessageItem from './MessageItem/MessageItem';
-import {DialogComponentType} from '../../Redux/Store';
 
 type DialogsType = {
     dialogsState: DialogComponentType
@@ -11,12 +11,12 @@ type DialogsType = {
 }
 
 function Dialogs(props: DialogsType) {
-
-
+    console.log(props.dialogsState)
+    debugger
     let dialogs = props.dialogsState.dialogs
     let messages = props.dialogsState.messages
 
-
+    debugger
     let dialogsItem = dialogs.map(d => <DialogsItem key={d.id} id={d.id} name={d.name}/>)
     let messagesItem = messages.map(m => <MessageItem key={m.id} message={m.message}/>)
 

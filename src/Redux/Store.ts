@@ -1,28 +1,28 @@
 import {profileReducer} from './profileReducer';
 import {dialogReducer} from './messageReducer';
 
-export type PostsType = {
+type PostsType = {
     id: number
     message: string
     likesCount: number
 }
 
-export type ProfileComponentType = {
+type ProfileComponentType = {
     posts: Array<PostsType>
     newPostText: string
 }
 
-export type DialogsType = {
+type DialogsType = {
     id: number
     name: string
 }
 
-export type MessagesType = {
+type MessagesType = {
     id: number
     message: string
 }
 
-export type DialogComponentType = {
+type DialogComponentType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
     newMessageText: string
@@ -35,25 +35,25 @@ export type RootStateType = {
 
 export type DispatchActionType = AddNewPostType | ChangePostElType | AddMessageType | ChangeMessageElType
 
-export type AddNewPostType = {
+type AddNewPostType = {
     type: 'ADD-NEW-POST'
 }
 
-export type ChangePostElType = {
+type ChangePostElType = {
     type: 'CHANGE-POST-EL'
     postEl: string
 }
 
-export type AddMessageType = {
+type AddMessageType = {
     type: 'ADD-NEW-MESSAGE'
 }
 
-export type ChangeMessageElType = {
+type ChangeMessageElType = {
     type: 'CHANGE-MESSAGE-EL'
     messageEl: string
 }
 
-export type StoreType = {
+type StoreType = {
     _state: RootStateType
     callback: () => void
     subscribe: (observer: () => void) => void
@@ -66,7 +66,7 @@ export type StoreType = {
 // ............
 // ............
 
-export const store: StoreType = {
+const store: StoreType = {
     _state: {
         profileComponent: {
             posts: [

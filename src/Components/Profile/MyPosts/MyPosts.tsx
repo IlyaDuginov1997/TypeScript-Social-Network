@@ -1,7 +1,7 @@
 import React from 'react';
+import { PostsType } from '../../../Redux/profileReducer';
 import classes from './MyPosts.module.css'
 import Post from './Post/Post';
-import {PostsType} from '../../../Redux/Store';
 
 type MyPostsPropsType = {
     posts: Array<PostsType>
@@ -12,7 +12,7 @@ type MyPostsPropsType = {
 
 function MyPosts(props: MyPostsPropsType) {
 
-
+    debugger
     let postsItem = props.posts.map(p => <Post key={p.id}
                                                message={p.message}
                                                likesCount={p.likesCount}/>)

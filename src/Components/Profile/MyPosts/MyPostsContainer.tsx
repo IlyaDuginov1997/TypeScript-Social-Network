@@ -1,32 +1,68 @@
 import React from 'react';
-import {AddPostActionCreator, AddPostElActionCreator} from '../../../Redux/profileReducer';
+import {AddPostActionCreator, AddPostElActionCreator, PostsType} from '../../../Redux/profileReducer';
 import MyPosts from './MyPosts';
-import {ReduxStoreType} from '../../../Redux/redux-store';
+import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
+import {RootReduxState} from '../../../Redux/redux-store';
 
-type MyPostsPropsType = {
-    store: ReduxStoreType
-
+type mapStateToPropsType = {
+    posts: Array<PostsType>
+    newPostText: string
 }
 
-function MyPostsContainer(props: MyPostsPropsType) {
+type mapDispatchToPropsType = {
+    addPost: () => void
+    addPostEl: (text: string) => void
+}
 
-    let posts = props.store.getState().profileComponent.posts;
-    let newPostText = props.store.getState().profileComponent.newPostText
+// function MyPostsContainer(props: MyPostsPropsType) {
+//
+//     let posts = props.store.getState().profileComponent.posts;
+//     let newPostText = props.store.getState().profileComponent.newPostText
+//
+//
+//     const addPost = () => {
+//         props.store.dispatch(AddPostActionCreator())
+//     }
+//
+//     const addPostEl = (text: string) => {
+//         if (text) {
+//             props.store.dispatch(AddPostElActionCreator(text))
+//         }
+//     }
+//
+//     return (
+//         <MyPosts
+//             posts={posts}
+//             newPostText={newPostText}
+//             addPost={addPost}
+//             addPostEl={addPostEl}/>
+//     );
+// }
 
 
-    const addPost = () => {
-        props.store.dispatch(AddPostActionCreator())
+
+
+let mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
+    debugger
+    return {
+        posts: state.profileComponent.posts,
+        newPostText: state.profileComponent.newPostText,
     }
+}
 
-    const addPostEl = (text: string) => {
-        if (text) {
-            props.store.dispatch(AddPostElActionCreator(text))
+let mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
+    return {
+        addPost: () => {
+            dispatch(AddPostActionCreator())
+        },
+        addPostEl: (text: string) => {
+            dispatch(AddPostElActionCreator(text))
         }
-    }
 
-    return (
-        <MyPosts posts={posts} newPostText={newPostText} addPost={addPost} addPostEl={addPostEl}/>
-    );
+    }
 }
+
+const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
 
 export default MyPostsContainer;

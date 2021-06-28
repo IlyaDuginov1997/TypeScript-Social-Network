@@ -1,4 +1,32 @@
-import {AddMessageType, ChangeMessageElType, DialogComponentType, DispatchActionType} from './Store';
+import { AddNewPostType, ChangePostElType } from './profileReducer';
+
+export type DialogsType = {
+    id: number
+    name: string
+}
+
+export type MessagesType = {
+    id: number
+    message: string
+}
+
+export type DialogComponentType = {
+    dialogs: Array<DialogsType>
+    messages: Array<MessagesType>
+    newMessageText: string
+}
+
+export type DispatchActionType = AddNewPostType | ChangePostElType | AddMessageType | ChangeMessageElType
+
+export type AddMessageType = {
+    type: 'ADD-NEW-MESSAGE'
+}
+
+export type ChangeMessageElType = {
+    type: 'CHANGE-MESSAGE-EL'
+    messageEl: string
+}
+
 
 let initialState: DialogComponentType = {
     dialogs: [

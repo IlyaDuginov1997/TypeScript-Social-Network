@@ -7,21 +7,9 @@ import {Route} from 'react-router-dom';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
-import {DispatchActionType, RootStateType} from './Redux/Store';
-import {ReduxStoreType} from './Redux/redux-store';
 import DialogsContainer from './Components/Dialogs/DialogsContainer';
 
-type AppType = {
-    state: RootStateType
-    // changePostEL: (el: string) => void,
-    // addPost: () => void,
-    // changeMessageEl: (el: string) => void,
-    // addMessage: () => void
-    dispatch: (action: DispatchActionType) => void
-    store: ReduxStoreType
-}
-
-const App = (props: AppType) => {
+const App = () => {
 
     return (
         <div className='appWrapper'>
@@ -29,10 +17,10 @@ const App = (props: AppType) => {
             <Navbar/>
             <div className='appWrapperContent'>
                 <Route path={'/profile'}
-                       render={() => <Profile store={props.store}/>}/>
+                       render={() => <Profile/>}/>
 
                 <Route path={'/dialogs'}
-                       render={() => <DialogsContainer store={props.store}/>}/>
+                       render={() => <DialogsContainer/>}/>
 
                 <Route path={'/news'} render={() => <News/>}/>
                 <Route path={'/music'} render={() => <Music/>}/>

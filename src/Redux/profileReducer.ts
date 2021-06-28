@@ -1,4 +1,27 @@
-import {AddNewPostType, ChangePostElType, DispatchActionType, ProfileComponentType} from './Store';
+import {AddMessageType, ChangeMessageElType} from './messageReducer';
+
+export type PostsType = {
+    id: number
+    message: string
+    likesCount: number
+}
+
+export type ProfileComponentType = {
+    posts: Array<PostsType>
+    newPostText: string
+}
+
+
+export type DispatchActionType = AddNewPostType | ChangePostElType | AddMessageType | ChangeMessageElType
+
+export type AddNewPostType = {
+    type: 'ADD-NEW-POST'
+}
+
+export type ChangePostElType = {
+    type: 'CHANGE-POST-EL'
+    postEl: string
+}
 
 let initialState: ProfileComponentType = {
     posts: [
