@@ -47,20 +47,23 @@ let initialState: DialogComponentType = {
 
 export function dialogReducer(state = initialState, action: DispatchActionType): DialogComponentType {
     switch (action.type) {
-        case 'CHANGE-MESSAGE-EL': {
-            let stateCopy = {...state}
-            stateCopy.newMessageText = action.messageEl
-            return stateCopy
-        }
-        case 'ADD-NEW-MESSAGE': {
-            let stateCopy = {...state}
-            let newMessageEl = {
-                id: 5,
-                message: stateCopy.newMessageText,
+        case 'CHANGE-MESSAGE-EL':
+            return {
+                ...state,
+                newMessageText: action.messageEl
             }
-            stateCopy.messages.push(newMessageEl)
-            stateCopy.newMessageText = ''
-            return stateCopy
+
+        case 'ADD-NEW-MESSAGE': {
+            let body = state.newMessageText
+            return  {
+                ...state,
+                newMessageText: '',
+                messages: [...state.messages, {
+                    id: 5,
+                    message: body,
+                }]
+            }
+
         }
         default:
             return state

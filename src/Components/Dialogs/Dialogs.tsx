@@ -11,12 +11,9 @@ type DialogsType = {
 }
 
 function Dialogs(props: DialogsType) {
-    console.log(props.dialogsState)
-    debugger
     let dialogs = props.dialogsState.dialogs
     let messages = props.dialogsState.messages
 
-    debugger
     let dialogsItem = dialogs.map(d => <DialogsItem key={d.id} id={d.id} name={d.name}/>)
     let messagesItem = messages.map(m => <MessageItem key={m.id} message={m.message}/>)
 

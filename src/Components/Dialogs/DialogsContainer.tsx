@@ -37,7 +37,6 @@ type mapDispatchToPropsType = {
 // }
 
 let mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
-    debugger
     return {
         dialogsState: state.dialogComponent,
     }

@@ -44,7 +44,6 @@ type mapDispatchToPropsType = {
 
 
 let mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
-    debugger
     return {
         posts: state.profileComponent.posts,
         newPostText: state.profileComponent.newPostText,

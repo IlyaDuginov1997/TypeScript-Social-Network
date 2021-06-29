@@ -30,27 +30,29 @@ let initialState: ProfileComponentType = {
         {id: 3, message: 'Sorry for my english', likesCount: 105},
         {id: 4, message: 'I love your likes', likesCount: 65},
     ],
-    newPostText: ''
+    newPostText: 'Hello'
 }
 
 export function profileReducer(state = initialState, action: DispatchActionType): ProfileComponentType {
     switch (action.type) {
-        case 'CHANGE-POST-EL': {
-            let stateCopy = {...state}
-            stateCopy.newPostText = action.postEl
-            return stateCopy
-        }
-        case 'ADD-NEW-POST': {
-            let stateCopy = {...state}
+        case 'CHANGE-POST-EL':
+            return {
+                ...state,
+                newPostText: action.postEl
+            }
+
+        case 'ADD-NEW-POST':
             let newPost = {
                 id: 5,
-                message: stateCopy.newPostText,
+                message: state.newPostText,
                 likesCount: 17
             }
-            stateCopy.posts.push(newPost)
-            stateCopy.newPostText = ''
-            return stateCopy
-        }
+            return {
+                ...state,
+                newPostText: '',
+                posts: [...state.posts, newPost],
+            }
+
         default:
             return state
     }
