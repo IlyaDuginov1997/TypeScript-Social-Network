@@ -1,4 +1,4 @@
-import { AddNewPostType, ChangePostElType } from './profileReducer';
+import { AddNewPostType, ChangePostElType } from "./profileReducer"
 
 export type DialogsType = {
     id: number
@@ -47,17 +47,21 @@ let initialState: DialogComponentType = {
 
 export function dialogReducer(state = initialState, action: DispatchActionType): DialogComponentType {
     switch (action.type) {
-        case 'CHANGE-MESSAGE-EL':
-            state.newMessageText = action.messageEl
-            return state
-        case 'ADD-NEW-MESSAGE':
+        case 'CHANGE-MESSAGE-EL': {
+            let stateCopy = {...state}
+            stateCopy.newMessageText = action.messageEl
+            return stateCopy
+        }
+        case 'ADD-NEW-MESSAGE': {
+            let stateCopy = {...state}
             let newMessageEl = {
                 id: 5,
-                message: state.newMessageText,
+                message: stateCopy.newMessageText,
             }
-            state.messages.push(newMessageEl)
-            state.newMessageText = ''
-            return state
+            stateCopy.messages.push(newMessageEl)
+            stateCopy.newMessageText = ''
+            return stateCopy
+        }
         default:
             return state
     }

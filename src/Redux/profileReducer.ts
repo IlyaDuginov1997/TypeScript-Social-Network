@@ -35,18 +35,22 @@ let initialState: ProfileComponentType = {
 
 export function profileReducer(state = initialState, action: DispatchActionType): ProfileComponentType {
     switch (action.type) {
-        case 'CHANGE-POST-EL':
-            state.newPostText = action.postEl
-            return state
-        case 'ADD-NEW-POST':
+        case 'CHANGE-POST-EL': {
+            let stateCopy = {...state}
+            stateCopy.newPostText = action.postEl
+            return stateCopy
+        }
+        case 'ADD-NEW-POST': {
+            let stateCopy = {...state}
             let newPost = {
                 id: 5,
-                message: state.newPostText,
+                message: stateCopy.newPostText,
                 likesCount: 17
             }
-            state.posts.push(newPost)
-            state.newPostText = ''
-            return state
+            stateCopy.posts.push(newPost)
+            stateCopy.newPostText = ''
+            return stateCopy
+        }
         default:
             return state
     }
