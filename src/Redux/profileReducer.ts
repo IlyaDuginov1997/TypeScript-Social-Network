@@ -1,5 +1,3 @@
-import {AddMessageType, ChangeMessageElType} from './messageReducer';
-
 export type PostsType = {
     id: number
     message: string
@@ -12,7 +10,7 @@ export type ProfileComponentType = {
 }
 
 
-export type DispatchActionType = AddNewPostType | ChangePostElType | AddMessageType | ChangeMessageElType
+export type DispatchActionType = AddNewPostType | ChangePostElType
 
 export type AddNewPostType = {
     type: 'ADD-NEW-POST'

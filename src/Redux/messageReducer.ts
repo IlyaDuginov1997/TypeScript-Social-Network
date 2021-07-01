@@ -1,5 +1,3 @@
-import { AddNewPostType, ChangePostElType } from "./profileReducer"
-
 export type DialogsType = {
     id: number
     name: string
@@ -16,7 +14,7 @@ export type DialogComponentType = {
     newMessageText: string
 }
 
-export type DispatchActionType = AddNewPostType | ChangePostElType | AddMessageType | ChangeMessageElType
+export type DispatchActionType = AddMessageType | ChangeMessageElType
 
 export type AddMessageType = {
     type: 'ADD-NEW-MESSAGE'
