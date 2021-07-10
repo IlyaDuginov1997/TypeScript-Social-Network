@@ -1,6 +1,8 @@
 import React from 'react';
 import {UserType} from '../../Redux/usersReducer';
 import classes from './Users.module.css';
+import axios from 'axios';
+import user from '../../Assets/Images/user.jpg'
 
 export type UsersPropsType = {
     users: Array<UserType>
@@ -11,46 +13,11 @@ export type UsersPropsType = {
 
 
 export function Users(props: UsersPropsType) {
-    debugger
     if (props.users.length === 0) {
-        props.setUsers([
-            {
-                id: 1,
-                imgUrl: 'https://cdn.pixabay.com/photo/2018/08/28/12/41/avatar-3637425_960_720.png',
-                followed: true,
-                name: 'Ilya D.',
-                status: 'I am homebrewer',
-                location: {
-                    id: 1,
-                    country: 'Belarus',
-                    cityName: 'Minsk',
-                }
-            },
-            {
-                id: 2,
-                imgUrl: 'https://cdn.pixabay.com/photo/2018/08/28/12/41/avatar-3637425_960_720.png',
-                followed: false,
-                name: 'Gleb D.',
-                status: 'I am programmer',
-                location: {
-                    id: 1,
-                    country: 'Belarus',
-                    cityName: 'Minsk',
-                }
-            },
-            {
-                id: 3,
-                imgUrl: 'https://cdn.pixabay.com/photo/2018/08/28/12/41/avatar-3637425_960_720.png',
-                followed: true,
-                name: 'Kostya K.',
-                status: 'Love to trade on the stock exchange',
-                location: {
-                    id: 1,
-                    country: 'Russia',
-                    cityName: 'Moscow',
-                }
-            },
-        ])
+        debugger
+        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+            props.setUsers(response.data.items)
+        })
     }
 
     return (
@@ -59,7 +26,7 @@ export function Users(props: UsersPropsType) {
                 return (<div key={u.id}>
                     <span>
                         <div>
-                             <img className={classes.avatar} src={u.imgUrl} alt='Sorry, we have some troubles'/>
+                             <img className={classes.avatar} src={u.photos.small ? u.photos.small : user}/>
                         </div>
                         <div>
                             {u.followed
@@ -79,8 +46,8 @@ export function Users(props: UsersPropsType) {
                         </span>
 
                         <span>
-                            <div>{u.location.country}</div>
-                            <div>{u.location.cityName}</div>
+                            <div>{'u.location.country'}</div>
+                            <div>{'u.location.cityName'}</div>
                         </span>
                     </span>
                 </div>)

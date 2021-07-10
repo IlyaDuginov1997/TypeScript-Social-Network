@@ -5,10 +5,14 @@ export type LocationType = {
 }
 
 export type UserType = {
-    id: number
-    imgUrl: string
-    followed: boolean
     name: string
+    followed: boolean
+    id: number
+    photos: {
+        large: string | undefined
+        small: string | undefined
+    }
+    uniqueUrlName: string
     status: string
     location: LocationType
 }
