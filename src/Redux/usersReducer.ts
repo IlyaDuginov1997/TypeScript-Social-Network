@@ -27,47 +27,15 @@ export type UnfollowType = {
     userId: number
 }
 
-type DispatchActionType = FollowType | UnfollowType
+export type SetUsersType = {
+    type: 'SET_USERS'
+    users: UserType[]
+}
+
+type DispatchActionType = FollowType | UnfollowType | SetUsersType
 
 let initialState: UsersComponentType = {
-    users: [
-        {
-            id: 1,
-            imgUrl: 'https://cdn.pixabay.com/photo/2018/08/28/12/41/avatar-3637425_960_720.png',
-            followed: true,
-            name: 'Ilya D.',
-            status: 'I am homebrewer',
-            location: {
-                id: 1,
-                country: 'Belarus',
-                cityName: 'Minsk',
-            }
-        },
-        {
-            id: 2,
-            imgUrl: 'https://cdn.pixabay.com/photo/2018/08/28/12/41/avatar-3637425_960_720.png',
-            followed: false,
-            name: 'Gleb D.',
-            status: 'I am programmer',
-            location: {
-                id: 1,
-                country: 'Belarus',
-                cityName: 'Minsk',
-            }
-        },
-        {
-            id: 3,
-            imgUrl: 'https://cdn.pixabay.com/photo/2018/08/28/12/41/avatar-3637425_960_720.png',
-            followed: true,
-            name: 'Kostya K.',
-            status: 'love to stock exchange',
-            location: {
-                id: 1,
-                country: 'Russia',
-                cityName: 'Moscow',
-            }
-        },
-    ],
+    users: []
 }
 
 export function usersReducer(state = initialState, action: DispatchActionType): UsersComponentType {
@@ -90,6 +58,10 @@ export function usersReducer(state = initialState, action: DispatchActionType): 
                         : u
                 })
             }
+        case 'SET_USERS':
+            return {
+                ...state, users: [...state.users, ...action.users]
+            }
         default:
             return state
     }
@@ -108,4 +80,12 @@ export function UnfollowAC(userId: number): UnfollowType {
         userId: userId,
     }
 }
+
+export function SetUsersAC(users: UserType[]): SetUsersType {
+    return {
+        type: 'SET_USERS',
+        users: users
+    }
+}
+
 
