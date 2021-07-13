@@ -12,21 +12,20 @@ export type UsersPropsType = {
 }
 
 
-export function Users(props: UsersPropsType) {
-    const getUsers = () => {
-        if (props.users.length === 0) {
-            axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-                props.setUsers(response.data.items)
-            })
-        }
+class Users extends React.Component<UsersPropsType, {}> {
+    constructor(props: UsersPropsType) {
+        super(props)
+        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+            this.props.setUsers(response.data.items)
+        })
     }
 
-    console.log('Users rendering')
-    return (
-        <div>
-            <button onClick={getUsers}>Get users</button>
-            {props.users.map(u => {
-                return (<div key={u.id}>
+    render() {
+        console.log('Users rendering')
+        return (
+            <div>
+                {this.props.users.map(u => {
+                    return (<div key={u.id}>
                     <span>
                         <div>
                              <img className={classes.avatar} src={u.photos.small ? u.photos.small : user}/>
@@ -34,15 +33,15 @@ export function Users(props: UsersPropsType) {
                         <div>
                             {u.followed
                                 ? <button onClick={() => {
-                                    props.unfollow(u.id)
+                                    this.props.unfollow(u.id)
                                 }}> Unfollow </button>
                                 : <button onClick={() => {
-                                    props.follow(u.id)
+                                    this.props.follow(u.id)
                                 }}> Follow </button>
                             }
                         </div>
                     </span>
-                    <span>
+                        <span>
                         <span>
                             <div>{u.name}</div>
                             <div>{u.status}</div>
@@ -53,8 +52,10 @@ export function Users(props: UsersPropsType) {
                             <div>{'u.location.cityName'}</div>
                         </span>
                     </span>
-                </div>)
-            })}
-        </div>)
+                    </div>)
+                })}
+            </div>)
+    }
 }
 
+export default Users

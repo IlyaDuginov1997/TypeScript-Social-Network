@@ -8,7 +8,7 @@ type ProfileType = {
 }
 
 function Profile(props: ProfileType) {
-
+    console.log('ProfilePage rendering')
     return (
         <div className={classes.content}>
             <ProfileInfo/>
