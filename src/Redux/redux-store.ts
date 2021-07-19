@@ -4,14 +4,14 @@ import {profileReducer} from './profileReducer';
 import {usersReducer} from './usersReducer';
 
 
-let reducers = combineReducers({
+let reducer = combineReducers({
     profileComponent: profileReducer,
     dialogComponent: dialogReducer,
     usersComponent: usersReducer,
 })
 
-export type RootReduxState = ReturnType<typeof reducers>
+export type RootReduxState = ReturnType<typeof reducer>
 
-export let store = createStore(reducers)
+export let store = createStore(reducer)
 
 
