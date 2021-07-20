@@ -60,7 +60,7 @@ let initialState: initialStateType = {
     users: [],
     pageSize: 20,
     totalUserCount: 0,
-    currentPage: 0,
+    currentPage: 1,
 }
 
 export function usersReducer(state = initialState, action: DispatchActionType): initialStateType {
