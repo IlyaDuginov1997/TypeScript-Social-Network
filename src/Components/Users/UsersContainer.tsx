@@ -3,7 +3,7 @@ import {RootReduxState} from '../../Redux/redux-store';
 import {connect} from 'react-redux';
 import {
     FollowAC,
-    SetCurrentPageAC,
+    SetCurrentPageAC, SetToggleIsFetchingAC,
     SetTotalCountUsersAC,
     SetUsersAC,
     UnfollowAC,
@@ -12,12 +12,16 @@ import {
 import {Dispatch} from 'redux';
 import axios from 'axios';
 import Users from './Users';
+import preloader from '../../Assets/Images/preloader.svg'
+import {Preloader} from '../../Common/Preloader/Preloader';
+
 
 type mapStateToPropsType = {
     users: Array<UserType>
     pageSize: number
     totalUserCount: number
     currentPage: number
+    isFetching: boolean
 }
 
 type mapDispatchToPropsType = {
@@ -26,6 +30,7 @@ type mapDispatchToPropsType = {
     setUsers: (users: UserType[]) => void
     setCurrentPage: (currentPage: number) => void
     setTotalCountUsers: (totalCountUsers: number) => void
+    setToggleIsFetching: (isFetching: boolean) => void
 }
 
 export type UsersPropsType = {
@@ -38,6 +43,9 @@ export type UsersPropsType = {
     setUsers: (users: UserType[]) => void
     setCurrentPage: (currentPage: number) => void
     setTotalCountUsers: (totalCountUsers: number) => void
+    isFetching: boolean
+    setToggleIsFetching: (isFetching: boolean) => void
+
 }
 
 class UsersComponent extends React.Component<UsersPropsType, {}> {
@@ -46,32 +54,38 @@ class UsersComponent extends React.Component<UsersPropsType, {}> {
     }
 
     componentDidMount() {
+        this.props.setToggleIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
             this.props.setUsers(response.data.items)
             this.props.setTotalCountUsers(response.data.totalCount)
+            this.props.setToggleIsFetching(false)
         })
     }
 
     onPageChanged = (currentPage: number) => {
+        this.props.setToggleIsFetching(true)
         this.props.setCurrentPage(currentPage)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`).then(response => {
             this.props.setUsers(response.data.items)
+            this.props.setToggleIsFetching(false)
         })
     }
 
     render() {
         return (
-            <Users
-                users={this.props.users}
-                totalUserCount={this.props.totalUserCount}
-                currentPage={this.props.currentPage}
-                unfollow={this.props.unfollow}
-                follow={this.props.follow}
-                pageSize={this.props.pageSize}
-                onPageChanged={this.onPageChanged}
-            />
+            <>
+                {this.props.isFetching ? <Preloader /> : null}
+                <Users
+                    users={this.props.users}
+                    totalUserCount={this.props.totalUserCount}
+                    currentPage={this.props.currentPage}
+                    unfollow={this.props.unfollow}
+                    follow={this.props.follow}
+                    pageSize={this.props.pageSize}
+                    onPageChanged={this.onPageChanged}
+                />
+            </>
         )
-
     }
 }
 
@@ -82,7 +96,7 @@ let mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
         pageSize: state.usersComponent.pageSize,
         totalUserCount: state.usersComponent.totalUserCount,
         currentPage: state.usersComponent.currentPage,
-
+        isFetching: state.usersComponent.isFetching,
     }
 }
 
@@ -102,6 +116,9 @@ let mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
         },
         setTotalCountUsers: (totalCountUsers: number) => {
             dispatch(SetTotalCountUsersAC(totalCountUsers))
+        },
+        setToggleIsFetching: (isFetching: boolean) => {
+            dispatch(SetToggleIsFetchingAC(isFetching))
         },
     }
 }
