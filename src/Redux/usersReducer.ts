@@ -112,42 +112,42 @@ export function usersReducer(state = initialState, action: DispatchActionType): 
 }
 
 
-export function FollowAC(userId: number): FollowType {
+export function follow(userId: number): FollowType {
     return {
         type: 'FOLLOW',
         userId: userId,
     }
 }
 
-export function UnfollowAC(userId: number): UnfollowType {
+export function unfollow(userId: number): UnfollowType {
     return {
         type: 'UNFOLLOW',
         userId: userId,
     }
 }
 
-export function SetUsersAC(users: UserType[]): SetUsersType {
+export function setUsers(users: UserType[]): SetUsersType {
     return {
         type: 'SET_USERS',
         users: users
     }
 }
 
-export function SetCurrentPageAC(currentPage: number): SetCurrentPageType {
+export function setCurrentPage(currentPage: number): SetCurrentPageType {
     return {
         type: 'SET_CURRENT_PAGE',
         currentPage: currentPage
     }
 }
 
-export function SetTotalCountUsersAC(totalCountUsers: number): SetTotalCountUsersType {
+export function setTotalCountUsers(totalCountUsers: number): SetTotalCountUsersType {
     return {
         type: 'SET_TOTAL_COUNT_USERS',
         totalCountUsers: totalCountUsers
     }
 }
 
-export function SetToggleIsFetchingAC(isFetching: boolean): SetToggleIsFetching {
+export function setToggleIsFetching(isFetching: boolean): SetToggleIsFetching {
     return {
         type: 'TOGGLE_IS_FETCHING',
         isFetching: isFetching
