@@ -1,6 +1,18 @@
 import React from 'react';
+import {GetProfileType} from '../ProfileContainer';
+import {Preloader} from '../../../Common/Preloader/Preloader';
 
-function ProfileInfo() {
+export type ProfileInfoPropsType = {
+    profilePhoto: GetProfileType | null
+}
+
+function ProfileInfo(props: ProfileInfoPropsType) {
+    console.log('ProfileInfo is rendering')
+
+    if (!props.profilePhoto) {
+        return <Preloader/>
+    }
+
     return (
         <div>
             <div>
@@ -9,9 +21,11 @@ function ProfileInfo() {
                     alt=''/>
             </div>
             <div>
+                <img src={props.profilePhoto?.photos.large} alt=''/>
                 ava + description
             </div>
         </div>
     );
 }
+
 export default ProfileInfo;

@@ -2,16 +2,16 @@ import React from 'react';
 import classes from './Profile.module.css'
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
+import {GetProfileType} from './ProfileContainer';
 
-type ProfileType = {
-    // store: ReduxStoreType
+export type ProfileType = {
+    profile: GetProfileType | null
 }
 
 function Profile(props: ProfileType) {
-    console.log('ProfilePage rendering')
     return (
         <div className={classes.content}>
-            <ProfileInfo/>
+            <ProfileInfo profilePhoto={props.profile}/>
             <MyPostsContainer/>
         </div>
     );

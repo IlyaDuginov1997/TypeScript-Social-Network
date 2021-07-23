@@ -3,14 +3,13 @@ import {RootReduxState} from '../../Redux/redux-store';
 import {connect} from 'react-redux';
 import {
     follow,
-    unfollow,
-    setUsers,
     setCurrentPage,
-    setTotalCountUsers,
     setToggleIsFetching,
+    setTotalCountUsers,
+    setUsers,
+    unfollow,
     UserType
 } from '../../Redux/usersReducer';
-import {Dispatch} from 'redux';
 import axios from 'axios';
 import Users from './Users';
 import {Preloader} from '../../Common/Preloader/Preloader';

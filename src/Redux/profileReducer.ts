@@ -1,3 +1,5 @@
+import {GetProfileType} from '../Components/Profile/ProfileContainer';
+
 export type PostsType = {
     id: number
     message: string
@@ -7,10 +9,11 @@ export type PostsType = {
 export type ProfileComponentType = {
     posts: Array<PostsType>
     newPostText: string
+    profile: GetProfileType | null
 }
 
 
-export type DispatchActionType = AddNewPostType | ChangePostElType
+export type DispatchActionType = AddNewPostType | ChangePostElType | SetUsersProfileType
 
 export type AddNewPostType = {
     type: 'ADD-NEW-POST'
@@ -21,6 +24,11 @@ export type ChangePostElType = {
     postEl: string
 }
 
+export type SetUsersProfileType = {
+    type: 'SET-USERS-PROFILE'
+    profile: GetProfileType
+}
+
 let initialState: ProfileComponentType = {
     posts: [
         {id: 1, message: 'Hello, my name is Ilya', likesCount: 34},
@@ -28,7 +36,8 @@ let initialState: ProfileComponentType = {
         {id: 3, message: 'Sorry for my english', likesCount: 105},
         {id: 4, message: 'I love your likes', likesCount: 65},
     ],
-    newPostText: 'Hello'
+    newPostText: 'Hello',
+    profile: null
 }
 
 export function profileReducer(state = initialState, action: DispatchActionType): ProfileComponentType {
@@ -50,7 +59,11 @@ export function profileReducer(state = initialState, action: DispatchActionType)
                 newPostText: '',
                 posts: [...state.posts, newPost],
             }
-
+        case 'SET-USERS-PROFILE':
+            return {
+                ...state,
+                profile: action.profile
+            }
         default:
             return state
     }
@@ -69,3 +82,9 @@ export function AddPostActionCreator(): AddNewPostType {
     }
 }
 
+export function setUsersProfile(profile: GetProfileType): SetUsersProfileType {
+    return {
+        type: 'SET-USERS-PROFILE',
+        profile: profile
+    }
+}
