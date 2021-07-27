@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {setUsersProfile} from '../../Redux/profileReducer';
 import {RootReduxState} from '../../Redux/redux-store';
 import Profile from './Profile';
+import {withRouter, RouteComponentProps} from 'react-router-dom';
+
 
 export type GetProfileType = {
     aboutMe: string
@@ -31,22 +33,35 @@ export type mapStateToPropsType = {
     profile: GetProfileType | null
 }
 
+export type PathParamsType = {
+    userId: string
+}
+
 type ProfileComponentType = {
     profile: GetProfileType | null
     setUsersProfile: (profile: GetProfileType) => void
 }
 
-class ProfileComponent extends React.Component<ProfileComponentType> {
+type ProfileComponentWithRouterPropsType = RouteComponentProps<PathParamsType> & ProfileComponentType
+
+
+class ProfileComponent extends React.Component<ProfileComponentWithRouterPropsType> {
 
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/1`).then(response => {
+        debugger
+        let userId = this.props.match.params.userId
+        if (!userId) {
+            userId = '2'
+        }
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId).then(response => {
             this.props.setUsersProfile(response.data)
-            debugger
         })
     }
 
     render() {
-        return <Profile profile={this.props.profile}/>
+        // можно избавиться от слова props (типо деструктуризации)
+        /*const {profile, setUsersProfile} = this.props*/
+        return <Profile profile={this.props.profile} /*{...this.props}*//>
     }
 }
 
@@ -56,6 +71,7 @@ const mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
     }
 }
 
-const ProfileContainer = connect(mapStateToProps, {setUsersProfile})(ProfileComponent)
+let WithUrlDataContainerComponent = withRouter(ProfileComponent)
+const ProfileContainer = connect(mapStateToProps, {setUsersProfile})(WithUrlDataContainerComponent)
 
 export default ProfileContainer;
