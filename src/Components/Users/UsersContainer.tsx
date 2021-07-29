@@ -22,15 +22,15 @@ type mapStateToPropsType = {
     currentPage: number
     isFetching: boolean
 }
-
-type mapDispatchToPropsType = {
+// работает сто старым вариантом mapDispatchToProps
+/*type mapDispatchToPropsType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
     setUsers: (users: UserType[]) => void
     setCurrentPage: (currentPage: number) => void
     setTotalCountUsers: (totalCountUsers: number) => void
     setToggleIsFetching: (isFetching: boolean) => void
-}
+}*/
 
 export type UsersPropsType = {
     users: Array<UserType>
@@ -48,9 +48,12 @@ export type UsersPropsType = {
 }
 
 class UsersComponent extends React.Component<UsersPropsType, {}> {
-    constructor(props: UsersPropsType) {
-        super(props)
-    }
+    // закоментировал, что бы избавится от warnings
+    // это дефолтная фраза, которую можно не писать, если мы не добавляем в дефолтные пропсы чего-либо
+
+    // constructor(props: UsersPropsType) {
+    //     super(props)
+    // }
 
     componentDidMount() {
         this.props.setToggleIsFetching(true)

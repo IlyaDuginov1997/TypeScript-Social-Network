@@ -8,7 +8,6 @@ export type ProfileInfoPropsType = {
 }
 
 function ProfileInfo(props: ProfileInfoPropsType) {
-    console.log('ProfileInfo is rendering')
 
     if (!props.profilePhoto) {
         return <Preloader/>

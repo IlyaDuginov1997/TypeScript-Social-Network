@@ -33,7 +33,7 @@ function Users(props: UsersPropsType) {
                     <span>
                         <div>
                             <NavLink to={'/profile/' + u.id}>
-                            <img className={classes.avatar} src={u.photos.small ? u.photos.small : user}/>
+                            <img className={classes.avatar} src={u.photos.small ? u.photos.small : user} alt={'sorry, we have some trobles'}/>
                             </NavLink>
                         </div>
                         <div>
