@@ -64,7 +64,7 @@ type DispatchActionType = FollowType | UnfollowType | SetUsersType | SetCurrentP
 
 let initialState: initialStateType = {
     users: [],
-    pageSize: 20,
+    pageSize: 100,
     totalUserCount: 0,
     currentPage: 1,
     isFetching: true,
