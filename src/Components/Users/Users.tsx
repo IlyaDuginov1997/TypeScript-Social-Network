@@ -3,7 +3,7 @@ import {UserType} from '../../Redux/usersReducer';
 import classes from './Users.module.css';
 import user from '../../Assets/Images/user.jpg'
 import {NavLink} from 'react-router-dom';
-import axios from 'axios';
+import {followAPI} from '../../API/API';
 
 export type UsersPropsType = {
     users: Array<UserType>
@@ -35,19 +35,14 @@ function Users(props: UsersPropsType) {
                         <div>
                             <NavLink to={'/profile/' + u.id}>
                             <img className={classes.avatar} src={u.photos.small ? u.photos.small : user}
-                                 alt={'sorry, we have some trobles'}/>
+                                 alt={'sorry, we have some troubles'}/>
                             </NavLink>
                         </div>
                         <div>
                             {u.followed
                                 ? <button onClick={() => {
-                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                                        withCredentials: true,
-                                        headers: {
-                                            'API-KEY': 'e5b738f6-4744-4b59-9452-509c57fc296b'
-                                        },
-                                    }).then(response => {
-                                        if (response.data.resultCode === 0) {
+                                    followAPI.unfollowUser(u.id).then(data => {
+                                        if (data.resultCode === 0) {
                                             props.unfollow(u.id)
                                         }
                                     })
@@ -55,13 +50,8 @@ function Users(props: UsersPropsType) {
 
                                 : <button onClick={() => {
 
-                                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
-                                        withCredentials: true,
-                                        headers: {
-                                            'API-KEY': 'e5b738f6-4744-4b59-9452-509c57fc296b'
-                                        },
-                                    }).then(response => {
-                                        if (response.data.resultCode === 0) {
+                                    followAPI.followUser(u.id).then(data => {
+                                        if (data.resultCode === 0) {
                                             props.follow(u.id)
                                         }
                                     })
