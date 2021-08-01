@@ -14,14 +14,17 @@ export type DialogComponentType = {
     newMessageText: string
 }
 
+const ADD_NEW_MESSAGE = 'ADD_NEW_MESSAGE'
+const CHANGE_MESSAGE_EL = 'CHANGE_MESSAGE_EL'
+
 export type DispatchActionType = AddMessageType | ChangeMessageElType
 
 export type AddMessageType = {
-    type: 'ADD-NEW-MESSAGE'
+    type: typeof ADD_NEW_MESSAGE
 }
 
 export type ChangeMessageElType = {
-    type: 'CHANGE-MESSAGE-EL'
+    type: typeof CHANGE_MESSAGE_EL
     messageEl: string
 }
 
@@ -45,13 +48,13 @@ let initialState: DialogComponentType = {
 
 export function dialogReducer(state = initialState, action: DispatchActionType): DialogComponentType {
     switch (action.type) {
-        case 'CHANGE-MESSAGE-EL':
+        case CHANGE_MESSAGE_EL:
             return {
                 ...state,
                 newMessageText: action.messageEl
             }
 
-        case 'ADD-NEW-MESSAGE': {
+        case ADD_NEW_MESSAGE: {
             let body = state.newMessageText
             return  {
                 ...state,
@@ -70,13 +73,13 @@ export function dialogReducer(state = initialState, action: DispatchActionType):
 
 export function AddMessageElActionCreator(messageEl: string): ChangeMessageElType {
     return {
-        type: 'CHANGE-MESSAGE-EL',
+        type: CHANGE_MESSAGE_EL,
         messageEl: messageEl
     }
 }
 
 export function AddMessageActionCreator(): AddMessageType {
     return {
-        type: 'ADD-NEW-MESSAGE',
+        type: ADD_NEW_MESSAGE,
     }
 }

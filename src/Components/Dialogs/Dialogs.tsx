@@ -11,7 +11,6 @@ type DialogsType = {
 }
 
 function Dialogs(props: DialogsType) {
-    console.log('DialogPage rendering')
 
     let dialogs = props.dialogsState.dialogs
     let messages = props.dialogsState.messages

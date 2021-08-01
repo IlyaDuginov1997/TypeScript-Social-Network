@@ -12,20 +12,23 @@ export type ProfileComponentType = {
     profile: GetProfileType | null
 }
 
+const ADD_NEW_POST = 'ADD_NEW_POST'
+const CHANGE_POST_EL = 'CHANGE_POST_EL'
+const SET_USERS_PROFILE = 'SET_USERS_PROFILE'
 
 export type DispatchActionType = AddNewPostType | ChangePostElType | SetUsersProfileType
 
 export type AddNewPostType = {
-    type: 'ADD-NEW-POST'
+    type: typeof ADD_NEW_POST
 }
 
 export type ChangePostElType = {
-    type: 'CHANGE-POST-EL'
+    type: typeof CHANGE_POST_EL
     postEl: string
 }
 
 export type SetUsersProfileType = {
-    type: 'SET-USERS-PROFILE'
+    type: typeof SET_USERS_PROFILE
     profile: GetProfileType
 }
 
@@ -42,13 +45,13 @@ let initialState: ProfileComponentType = {
 
 export function profileReducer(state = initialState, action: DispatchActionType): ProfileComponentType {
     switch (action.type) {
-        case 'CHANGE-POST-EL':
+        case CHANGE_POST_EL:
             return {
                 ...state,
                 newPostText: action.postEl
             }
 
-        case 'ADD-NEW-POST':
+        case ADD_NEW_POST:
             let newPost = {
                 id: 5,
                 message: state.newPostText,
@@ -59,7 +62,7 @@ export function profileReducer(state = initialState, action: DispatchActionType)
                 newPostText: '',
                 posts: [...state.posts, newPost],
             }
-        case 'SET-USERS-PROFILE':
+        case SET_USERS_PROFILE:
             return {
                 ...state,
                 profile: action.profile
@@ -71,20 +74,20 @@ export function profileReducer(state = initialState, action: DispatchActionType)
 
 export function AddPostElActionCreator(postEl: string): ChangePostElType {
     return {
-        type: 'CHANGE-POST-EL',
+        type: CHANGE_POST_EL,
         postEl: postEl
     }
 }
 
 export function AddPostActionCreator(): AddNewPostType {
     return {
-        type: 'ADD-NEW-POST',
+        type: ADD_NEW_POST,
     }
 }
 
 export function setUsersProfile(profile: GetProfileType): SetUsersProfileType {
     return {
-        type: 'SET-USERS-PROFILE',
+        type: SET_USERS_PROFILE,
         profile: profile
     }
 }

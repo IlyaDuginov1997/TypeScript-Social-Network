@@ -3,7 +3,7 @@ import {RootReduxState} from '../../Redux/redux-store';
 import {connect} from 'react-redux';
 import {
     follow,
-    setCurrentPage,
+    setCurrentPage, setToggleFollowingInProcess,
     setToggleIsFetching,
     setTotalCountUsers,
     setUsers,
@@ -21,6 +21,7 @@ type mapStateToPropsType = {
     totalUserCount: number
     currentPage: number
     isFetching: boolean
+    toggleFollowingProcessArray: [] | number[]
 }
 // работает сто старым вариантом mapDispatchToProps
 /*type mapDispatchToPropsType = {
@@ -44,7 +45,8 @@ export type UsersPropsType = {
     setTotalCountUsers: (totalCountUsers: number) => void
     isFetching: boolean
     setToggleIsFetching: (isFetching: boolean) => void
-
+    toggleFollowingProcessArray: [] | number[]
+    setToggleFollowingInProcess: (isFollowingInProcess: boolean, userId: number) => void
 }
 
 class UsersComponent extends React.Component<UsersPropsType, {}> {
@@ -87,6 +89,8 @@ class UsersComponent extends React.Component<UsersPropsType, {}> {
                     follow={this.props.follow}
                     pageSize={this.props.pageSize}
                     onPageChanged={this.onPageChanged}
+                    toggleFollowingProcessArray={this.props.toggleFollowingProcessArray}
+                    setToggleFollowingInProcess={this.props.setToggleFollowingInProcess}
                 />
             </>
         )
@@ -101,6 +105,7 @@ let mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
         totalUserCount: state.usersComponent.totalUserCount,
         currentPage: state.usersComponent.currentPage,
         isFetching: state.usersComponent.isFetching,
+        toggleFollowingProcessArray: state.usersComponent.toggleFollowingProcessArray,
     }
 }
 
@@ -130,6 +135,6 @@ let mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
 // }
 
 const UsersContainer = connect(mapStateToProps, {follow, unfollow, setUsers, setCurrentPage, setTotalCountUsers,
-    setToggleIsFetching,})(UsersComponent)
+    setToggleIsFetching, setToggleFollowingInProcess})(UsersComponent)
 
 export default UsersContainer;
