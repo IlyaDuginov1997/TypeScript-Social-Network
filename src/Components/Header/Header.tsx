@@ -4,7 +4,6 @@ import {NavLink} from 'react-router-dom';
 
 export type HeaderPropsType = {
     login: string | null
-    setAuthUserData: (id: number, email: string, login: string,) => void
     auth: boolean
 }
 

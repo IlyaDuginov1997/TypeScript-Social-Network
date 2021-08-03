@@ -1,4 +1,6 @@
 import {GetProfileType} from '../Components/Profile/ProfileContainer';
+import {profileAPI} from '../API/API';
+import {Dispatch} from 'redux';
 
 export type PostsType = {
     id: number
@@ -89,5 +91,13 @@ export function setUsersProfile(profile: GetProfileType): SetUsersProfileType {
     return {
         type: SET_USERS_PROFILE,
         profile: profile
+    }
+}
+
+export const getProfileThunk = (userId: string) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.userProfile(userId).then(data => {
+            dispatch(setUsersProfile(data))
+        })
     }
 }

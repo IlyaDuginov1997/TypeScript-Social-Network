@@ -47,7 +47,7 @@ export const followAPI = {
 
 export const profileAPI = {
     userProfile(userId: string) {
-        return instance.get(`profile/` + userId)
+        return instance.get(`profile/${userId}`)
             .then(response => {
                 return response.data
             })

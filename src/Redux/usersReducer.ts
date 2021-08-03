@@ -1,3 +1,6 @@
+import {followAPI, usersAPI} from '../API/API';
+import {Dispatch} from 'redux';
+
 export type LocationType = {
     id: number
     country: string
@@ -54,12 +57,12 @@ export type SetTotalCountUsersType = {
     totalCountUsers: number
 }
 
-export type SetToggleIsFetching = {
+export type SetToggleIsFetchingType = {
     type: typeof TOGGLE_IS_FETCHING
     isFetching: boolean
 }
 
-export type SetToggleFollowingInProcess = {
+export type SetToggleFollowingInProcessType = {
     type: typeof TOGGLE_FOLLOWING_IN_PROCESS,
     isFollowingInProcess: boolean,
     userId: number,
@@ -75,7 +78,14 @@ export type initialStateType = {
 
 }
 
-type DispatchActionType = FollowType | UnfollowType | SetUsersType | SetCurrentPageType | SetTotalCountUsersType | SetToggleIsFetching | SetToggleFollowingInProcess
+type DispatchActionType =
+    FollowType
+    | UnfollowType
+    | SetUsersType
+    | SetCurrentPageType
+    | SetTotalCountUsersType
+    | SetToggleIsFetchingType
+    | SetToggleFollowingInProcessType
 
 let initialState: initialStateType = {
     users: [],
@@ -135,14 +145,14 @@ export function usersReducer(state = initialState, action: DispatchActionType): 
 }
 
 
-export function follow(userId: number): FollowType {
+export function followSuccess(userId: number): FollowType {
     return {
         type: FOLLOW,
         userId: userId,
     }
 }
 
-export function unfollow(userId: number): UnfollowType {
+export function unfollowSuccess(userId: number): UnfollowType {
     return {
         type: UNFOLLOW,
         userId: userId,
@@ -170,14 +180,14 @@ export function setTotalCountUsers(totalCountUsers: number): SetTotalCountUsersT
     }
 }
 
-export function setToggleIsFetching(isFetching: boolean): SetToggleIsFetching {
+export function setToggleIsFetching(isFetching: boolean): SetToggleIsFetchingType {
     return {
         type: TOGGLE_IS_FETCHING,
         isFetching: isFetching,
     }
 }
 
-export function setToggleFollowingInProcess(isFollowingInProcess: boolean, userId: number): SetToggleFollowingInProcess {
+export function setToggleFollowingInProcess(isFollowingInProcess: boolean, userId: number): SetToggleFollowingInProcessType {
     return {
         type: TOGGLE_FOLLOWING_IN_PROCESS,
         isFollowingInProcess: isFollowingInProcess,
@@ -185,3 +195,37 @@ export function setToggleFollowingInProcess(isFollowingInProcess: boolean, userI
     }
 }
 
+export const getUsers = (currentPage: number, pageSize: number) => {
+    return (dispatch: Dispatch) => {
+        dispatch(setToggleIsFetching(true))
+        usersAPI.getUsers(currentPage, pageSize).then(data => {
+            dispatch(setUsers(data.items))
+            dispatch(setTotalCountUsers(data.totalCount))
+            dispatch(setToggleIsFetching(false))
+        })
+    }
+}
+
+export const unfollowUserThunk = (userId: number) => {
+    return (dispatch: Dispatch) => {
+        dispatch(setToggleFollowingInProcess(true, userId))
+        followAPI.unfollowUser(userId).then(data => {
+            if (data.resultCode === 0) {
+                dispatch(unfollowSuccess(userId))
+            }
+            dispatch(setToggleFollowingInProcess(false, userId))
+        })
+    }
+}
+
+export const followUserThunk = (userId: number) => {
+    return (dispatch: Dispatch) => {
+        dispatch(setToggleFollowingInProcess(true, userId))
+        followAPI.followUser(userId).then(data => {
+            if (data.resultCode === 0) {
+                dispatch(followSuccess(userId))
+            }
+            dispatch(setToggleFollowingInProcess(false, userId))
+        })
+    }
+}
