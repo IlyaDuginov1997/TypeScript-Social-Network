@@ -8,6 +8,7 @@ import {RootReduxState} from '../../Redux/redux-store';
 
 type mapStateToPropsType = {
     dialogsState: DialogComponentType
+    isAuth: boolean
 }
 
 type mapDispatchToPropsType = {
@@ -39,6 +40,7 @@ type mapDispatchToPropsType = {
 let mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
     return {
         dialogsState: state.dialogComponent,
+        isAuth: state.auth.isAuth
     }
 }
 

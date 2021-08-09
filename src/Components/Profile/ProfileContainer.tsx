@@ -30,6 +30,7 @@ export type GetProfileType = {
 
 export type mapStateToPropsType = {
     profile: GetProfileType | null
+    isAuth: boolean
 }
 
 export type PathParamsType = {
@@ -39,6 +40,7 @@ export type PathParamsType = {
 type ProfileComponentType = {
     profile: GetProfileType | null
     getProfileThunk: (userId: string) => void
+    isAuth: boolean
 }
 
 type ProfileComponentWithRouterPropsType = RouteComponentProps<PathParamsType> & ProfileComponentType
@@ -57,13 +59,14 @@ class ProfileComponent extends React.Component<ProfileComponentWithRouterPropsTy
     render() {
         // можно избавиться от слова props (типо деструктуризации)
         /*const {profile, setUsersProfile} = this.props*/
-        return <Profile profile={this.props.profile} /*{...this.props}*//>
+        return <Profile profile={this.props.profile} isAuth={this.props.isAuth} /*{...this.props}*//>
     }
 }
 
 const mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
     return {
-        profile: state.profileComponent.profile
+        profile: state.profileComponent.profile,
+        isAuth: state.auth.isAuth,
     }
 }
 

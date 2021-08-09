@@ -3,9 +3,11 @@ import { DialogComponentType } from '../../Redux/messageReducer';
 import classes from './Dialogs.module.css';
 import DialogsItem from './DialogsItem/DialogsItem';
 import MessageItem from './MessageItem/MessageItem';
+import {Redirect} from 'react-router-dom';
 
 type DialogsType = {
     dialogsState: DialogComponentType
+    isAuth: boolean
     addMessage: () => void
     addMessageEl: (message: string) => void
 }
@@ -28,6 +30,10 @@ function Dialogs(props: DialogsType) {
         if (newMessageEl.current) {
             props.addMessageEl(newMessageEl.current?.value)
         }
+    }
+
+    if (!props.isAuth) {
+        return <Redirect to={'/login'}/>
     }
 
     return (
