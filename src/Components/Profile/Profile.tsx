@@ -15,10 +15,9 @@ function Profile(props: ProfileType) {
     if (!props.isAuth) {
         return <Redirect to={'/login'}/>
     }
-    alert(!props.isAuth)
     return (
         <div className={classes.content}>
-            <ProfileInfo profilePhoto={props.profile}/>
+            <ProfileInfo profile={props.profile}/>
             <MyPostsContainer/>
         </div>
     );

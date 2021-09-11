@@ -71,6 +71,4 @@ const mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
 }
 
 let WithUrlDataContainerComponent = withRouter(ProfileComponent)
-const ProfileContainer = connect(mapStateToProps, {getProfileThunk})(WithUrlDataContainerComponent)
-
-export default ProfileContainer;
+export const ProfileContainer = connect(mapStateToProps, {getProfileThunk})(WithUrlDataContainerComponent)

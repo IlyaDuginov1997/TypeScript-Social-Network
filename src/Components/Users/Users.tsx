@@ -1,5 +1,5 @@
 import React from 'react';
-import {followUserThunk, unfollowUserThunk, UserType} from '../../Redux/usersReducer';
+import {UserType} from '../../Redux/usersReducer';
 import classes from './Users.module.css';
 import user from '../../Assets/Images/user.jpg'
 import {NavLink} from 'react-router-dom';

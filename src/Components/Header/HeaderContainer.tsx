@@ -15,7 +15,7 @@ export type MapStateToPropsType = {
     auth: boolean
 }
 
-class HeaderContainer extends React.Component<HeaderContainerType, any> {
+class HeaderComponent extends React.Component<HeaderContainerType, any> {
 
     componentDidMount() {
         this.props.authUserThunk()
@@ -33,4 +33,6 @@ let mapStateToProps = (state: RootReduxState): MapStateToPropsType => {
     }
 }
 
-export default connect(mapStateToProps, {authUserThunk})(HeaderContainer);
+
+export const HeaderContainer = connect(mapStateToProps, {authUserThunk})(HeaderComponent)
+

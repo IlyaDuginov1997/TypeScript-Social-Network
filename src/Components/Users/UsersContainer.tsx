@@ -1,16 +1,7 @@
 import React from 'react';
 import {RootReduxState} from '../../Redux/redux-store';
 import {connect} from 'react-redux';
-import {
-    followUserThunk,
-    getUsers,
-    setCurrentPage,
-    setToggleFollowingInProcess,
-    setToggleIsFetching,
-    setUsers,
-    unfollowUserThunk,
-    UserType
-} from '../../Redux/usersReducer';
+import {followUserThunk, getUsers, unfollowUserThunk, UserType} from '../../Redux/usersReducer';
 import Users from './Users';
 import {Preloader} from '../../Common/Preloader/Preloader';
 
@@ -38,10 +29,7 @@ export type UsersPropsType = {
     pageSize: number
     totalUserCount: number
     currentPage: number
-    setUsers: (users: UserType[]) => void
-    setCurrentPage: (currentPage: number) => void
     isFetching: boolean
-    setToggleIsFetching: (isFetching: boolean) => void
     toggleFollowingProcessArray: [] | number[]
     getUsers: (currentPage: number, pageSize: number) => void
     unfollowUserThunk: (userId: number) => void
@@ -120,13 +108,8 @@ let mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
 //     }
 // }
 
-const UsersContainer = connect(mapStateToProps, {
-    setUsers,
-    setCurrentPage,
-    setToggleIsFetching,
+export const UsersContainer = connect(mapStateToProps, {
     getUsers,
     unfollowUserThunk,
     followUserThunk,
 })(UsersComponent)
-
-export default UsersContainer;

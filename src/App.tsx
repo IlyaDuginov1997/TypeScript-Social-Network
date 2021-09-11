@@ -5,11 +5,11 @@ import {Route} from 'react-router-dom';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
-import DialogsContainer from './Components/Dialogs/DialogsContainer';
-import UsersContainer from './Components/Users/UsersContainer';
-import ProfileContainer from './Components/Profile/ProfileContainer';
-import HeaderContainer from './Components/Header/HeaderContainer';
 import Login from './Components/Login/Login';
+import {DialogsContainer} from './Components/Dialogs/DialogsContainer';
+import {HeaderContainer} from './Components/Header/HeaderContainer';
+import {ProfileContainer} from './Components/Profile/ProfileContainer';
+import {UsersContainer} from './Components/Users/UsersContainer';
 
 
 const App = () => {
@@ -26,7 +26,7 @@ const App = () => {
                        render={() => <DialogsContainer/>}/>
 
                 <Route path={'/users'}
-                       render={() => <UsersContainer />}/>
+                       render={() => <UsersContainer/>}/>
 
                 <Route path={'/news'} render={() => <News/>}/>
                 <Route path={'/music'} render={() => <Music/>}/>

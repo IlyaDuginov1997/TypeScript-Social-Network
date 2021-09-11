@@ -57,8 +57,6 @@ export function setAuthUserData(id: number, email: string, login: string, /*data
     }
 }
 
-export default authReducer
-
 export const authUserThunk = () => {
     return (dispatch: Dispatch) => {
         authAPI.authUser().then(data => {
@@ -69,3 +67,4 @@ export const authUserThunk = () => {
         })
     }
 }
+
