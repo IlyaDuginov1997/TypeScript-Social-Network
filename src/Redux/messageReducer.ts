@@ -42,7 +42,7 @@ let initialState: DialogComponentType = {
         {id: 2, message: 'I am fine'},
         {id: 3, message: 'Yo'},
     ],
-    newMessageText: ''
+    newMessageText: 'It is my first message to you'
 
 }
 
@@ -71,14 +71,14 @@ export function dialogReducer(state = initialState, action: DispatchActionType):
     }
 }
 
-export function AddMessageElActionCreator(messageEl: string): ChangeMessageElType {
+export function addMessageEl(messageEl: string): ChangeMessageElType {
     return {
         type: CHANGE_MESSAGE_EL,
         messageEl: messageEl
     }
 }
 
-export function AddMessageActionCreator(): AddMessageType {
+export function addMessage(): AddMessageType {
     return {
         type: ADD_NEW_MESSAGE,
     }

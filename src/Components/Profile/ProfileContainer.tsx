@@ -4,6 +4,7 @@ import {getProfileThunk} from '../../Redux/profileReducer';
 import {RootReduxState} from '../../Redux/redux-store';
 import Profile from './Profile';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {withAuthRedirect} from '../WithAuthRedirectComponent/WithAuthRedirectComponent';
 
 
 export type GetProfileType = {
@@ -30,7 +31,6 @@ export type GetProfileType = {
 
 export type mapStateToPropsType = {
     profile: GetProfileType | null
-    isAuth: boolean
 }
 
 export type PathParamsType = {
@@ -57,18 +57,18 @@ class ProfileComponent extends React.Component<ProfileComponentWithRouterPropsTy
     }
 
     render() {
+
         // можно избавиться от слова props (типо деструктуризации)
         /*const {profile, setUsersProfile} = this.props*/
-        return <Profile profile={this.props.profile} isAuth={this.props.isAuth} /*{...this.props}*//>
+        return <Profile profile={this.props.profile}/*{...this.props}*//>
     }
 }
 
 const mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
     return {
         profile: state.profileComponent.profile,
-        isAuth: state.auth.isAuth,
     }
 }
 
 let WithUrlDataContainerComponent = withRouter(ProfileComponent)
-export const ProfileContainer = connect(mapStateToProps, {getProfileThunk})(WithUrlDataContainerComponent)
+export const ProfileContainer = withAuthRedirect(connect(mapStateToProps, {getProfileThunk})(WithUrlDataContainerComponent))
