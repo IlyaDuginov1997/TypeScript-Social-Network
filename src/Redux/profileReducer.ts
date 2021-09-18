@@ -90,7 +90,7 @@ export function AddPostActionCreator(): AddNewPostType {
 export function setUsersProfile(profile: GetProfileType): SetUsersProfileType {
     return {
         type: SET_USERS_PROFILE,
-        profile: profile
+        profile
     }
 }
 

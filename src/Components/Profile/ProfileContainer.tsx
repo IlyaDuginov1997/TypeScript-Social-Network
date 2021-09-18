@@ -41,7 +41,6 @@ export type PathParamsType = {
 type ProfileComponentType = {
     profile: GetProfileType | null
     getProfileThunk: (userId: string) => void
-    isAuth: boolean
 }
 
 type ProfileComponentWithRouterPropsType = RouteComponentProps<PathParamsType> & ProfileComponentType
