@@ -17,7 +17,7 @@ export type UserType = {
     }
     uniqueUrlName: string
     status: string
-    location: LocationType
+    location?: LocationType
 }
 
 export type UsersComponentType = {

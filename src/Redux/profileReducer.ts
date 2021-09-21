@@ -14,6 +14,7 @@ export type ProfileComponentType = {
     profile: GetProfileType | null
 }
 
+
 const ADD_NEW_POST = 'ADD_NEW_POST'
 const CHANGE_POST_EL = 'CHANGE_POST_EL'
 const SET_USERS_PROFILE = 'SET_USERS_PROFILE'
@@ -42,7 +43,7 @@ let initialState: ProfileComponentType = {
         {id: 4, message: 'I love your likes', likesCount: 65},
     ],
     newPostText: 'Hello',
-    profile: null
+    profile: null,
 }
 
 export function profileReducer(state = initialState, action: DispatchActionType): ProfileComponentType {
@@ -94,9 +95,9 @@ export function setUsersProfile(profile: GetProfileType): SetUsersProfileType {
     }
 }
 
-export const getProfileThunk = (userId: string) => {
+export const getUserProfileThunk = (userId: string) => {
     return (dispatch: Dispatch) => {
-        profileAPI.userProfile(userId).then(data => {
+        profileAPI.getUserProfile(userId).then(data => {
             dispatch(setUsersProfile(data))
         })
     }
