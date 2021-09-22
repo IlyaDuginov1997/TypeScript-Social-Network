@@ -6,6 +6,8 @@ import {ProfileStatus} from './ProfileStatus';
 
 export type ProfileInfoPropsType = {
     profile: GetProfileType | null
+    profileStatus: string
+    updateProfileStatusThunk: (status: string) => void
 }
 
 function ProfileInfo(props: ProfileInfoPropsType) {
@@ -13,7 +15,7 @@ function ProfileInfo(props: ProfileInfoPropsType) {
     if (!props.profile) {
         return <Preloader/>
     }
-    console.log(props.profile)
+
     return (
         <div>
             {/*<div>*/}
@@ -21,7 +23,9 @@ function ProfileInfo(props: ProfileInfoPropsType) {
             {/*         src='https://st2.depositphotos.com/3106839/7689/i/600/depositphotos_76899721-stock-photo-barley-beans-in-wooden-plate.jpg'*/}
             {/*         alt=''/>*/}
             {/*</div>*/}
-            <ProfileStatus status={'It is my status for live'} />
+            <ProfileStatus
+                updateProfileStatusThunk={props.updateProfileStatusThunk}
+                profileStatus={props.profileStatus}/>
             <div>
                 <img className={classes.profilePhoto}
                      src={props.profile?.photos.large} alt=''/>

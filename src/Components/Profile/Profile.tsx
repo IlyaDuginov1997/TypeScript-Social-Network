@@ -6,13 +6,18 @@ import {GetProfileType} from './ProfileContainer';
 
 export type ProfileType = {
     profile: GetProfileType | null
+    profileStatus: string
+    updateProfileStatusThunk: (status: string) => void
 }
 
 function Profile(props: ProfileType) {
 
     return (
         <div className={classes.content}>
-            <ProfileInfo profile={props.profile}/>
+            <ProfileInfo
+                updateProfileStatusThunk={props.updateProfileStatusThunk}
+                profileStatus={props.profileStatus}
+                profile={props.profile}/>
             <MyPostsContainer/>
         </div>
     );

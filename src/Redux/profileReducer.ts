@@ -12,14 +12,16 @@ export type ProfileComponentType = {
     posts: Array<PostsType>
     newPostText: string
     profile: GetProfileType | null
+    status: string
 }
 
 
 const ADD_NEW_POST = 'ADD_NEW_POST'
 const CHANGE_POST_EL = 'CHANGE_POST_EL'
 const SET_USERS_PROFILE = 'SET_USERS_PROFILE'
+const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS'
 
-export type DispatchActionType = AddNewPostType | ChangePostElType | SetUsersProfileType
+export type DispatchActionType = AddNewPostType | ChangePostElType | SetUsersProfileType | SetProfileStatusType
 
 export type AddNewPostType = {
     type: typeof ADD_NEW_POST
@@ -35,6 +37,11 @@ export type SetUsersProfileType = {
     profile: GetProfileType
 }
 
+export type SetProfileStatusType = {
+    type: typeof SET_PROFILE_STATUS
+    status: string
+}
+
 let initialState: ProfileComponentType = {
     posts: [
         {id: 1, message: 'Hello, my name is Ilya', likesCount: 34},
@@ -44,6 +51,7 @@ let initialState: ProfileComponentType = {
     ],
     newPostText: 'Hello',
     profile: null,
+    status: '',
 }
 
 export function profileReducer(state = initialState, action: DispatchActionType): ProfileComponentType {
@@ -70,6 +78,11 @@ export function profileReducer(state = initialState, action: DispatchActionType)
                 ...state,
                 profile: action.profile
             }
+        case SET_PROFILE_STATUS:
+            return {
+                ...state,
+                status: action.status
+            }
         default:
             return state
     }
@@ -92,6 +105,31 @@ export function setUsersProfile(profile: GetProfileType): SetUsersProfileType {
     return {
         type: SET_USERS_PROFILE,
         profile
+    }
+}
+
+export function setProfileStatus(status: any): SetProfileStatusType {
+    return {
+        type: SET_PROFILE_STATUS,
+        status
+    }
+}
+
+export const getProfileStatusThunk = (userId: string) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.getProfileStatus(userId).then(data => {
+            dispatch(setProfileStatus(data))
+        })
+    }
+}
+
+export const updateProfileStatusThunk = (status: string) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.updateProfileStatus(status).then(data => {
+            if (data.resultCode === 0) {
+                dispatch(setProfileStatus(status))
+            }
+        })
     }
 }
 

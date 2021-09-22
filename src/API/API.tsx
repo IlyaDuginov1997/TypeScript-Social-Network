@@ -15,7 +15,7 @@ type authDataType = {
     login: string
 }
 
-type commonType<T> = {
+type commonType<T = {}> = {
     resultCode: number
     messages: string[]
     fieldsErrors: string[]
@@ -51,13 +51,13 @@ export const authAPI = {
 
 export const followAPI = {
     followUser(id: number) {
-        return instance.post<commonType<{}>>(`follow/${id}`)
+        return instance.post<commonType>(`follow/${id}`)
             .then(response => {
                 return response.data
             })
     },
     unfollowUser(id: number) {
-        return instance.delete<commonType<{}>>(`follow/${id}`)
+        return instance.delete<commonType>(`follow/${id}`)
             .then(response => {
                 return response.data
             })
@@ -75,12 +75,12 @@ export const profileAPI = {
     getProfileStatus(userId: string) {
         return instance.get<string>(`profile/status/${userId}`)
             .then(responce => {
-                return responce
+                return responce.data
             })
     },
 
     updateProfileStatus(status: string) {
-        return instance.post<commonType<{}>>(`profile/status`, {status: status})
+        return instance.put<commonType>(`profile/status`, {status: status})
             .then(responce => {
                 return responce.data
             })
