@@ -5,6 +5,11 @@ export type ProfileStatusPropsType = {
     updateProfileStatusThunk: (status: string) => void
 }
 
+export type stateType = {
+    editMode: boolean
+    status: string
+}
+
 export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
 
     state = {
@@ -31,12 +36,21 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
         })
     }
 
+    componentDidUpdate(prevProps: ProfileStatusPropsType, prevState: stateType) {
+        debugger
+        if (prevProps.profileStatus !== this.props.profileStatus) {
+            this.setState({
+                status: this.props.profileStatus
+            })
+        }
+    }
+
     render() {
         return (
             <div>
                 {!this.state.editMode
                     ? <div>
-                        <span onDoubleClick={this.onEditMode}>{this.props.profileStatus}</span>
+                        <span onDoubleClick={this.onEditMode}>{this.props.profileStatus || '-----'}</span>
                     </div>
 
                     : <div>
