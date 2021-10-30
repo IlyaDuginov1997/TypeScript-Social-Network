@@ -1,43 +1,33 @@
 import React from 'react';
 import {PostsType} from '../../../Redux/profileReducer';
-import classes from './MyPosts.module.css'
+import classes from './MyPosts.module.css';
+import {FormDataPostType, MyPostReduxForm} from './MyPostsForm';
 import Post from './Post/Post';
 
 type MyPostsPropsType = {
     posts: Array<PostsType>
-    newPostText: string
-    addPost: () => void
-    addPostEl: (text: string) => void
+    addPost: (post: string) => void
 }
 
 function MyPosts(props: MyPostsPropsType) {
     let postsItem = props.posts.map(p => <Post key={p.id}
                                                message={p.message}
-                                               likesCount={p.likesCount}/>)
+                                               likesCount={p.likesCount}/>);
 
-    const newPostEl = React.createRef<HTMLTextAreaElement>()
-
-    const onAddPost = () => {
-        if (newPostEl.current) {
-            props.addPost()
-        }
-    }
-
-    const addPostEl = () => {
-        if (newPostEl.current) {
-            props.addPostEl(newPostEl.current?.value)
-        }
-    }
+    const onSubmit = (formDate: FormDataPostType) => {
+        props.addPost(formDate.myPost);
+    };
 
     return (
         <div>
             My posts
-            <div>
-                <textarea value={props.newPostText} ref={newPostEl} onChange={addPostEl}></textarea>
-                <div>
-                    <button onClick={onAddPost}>Add post</button>
-                </div>
-            </div>
+            <MyPostReduxForm onSubmit={onSubmit}/>
+            {/*<div>*/}
+            {/*    <textarea value={props.newPostText} ref={newPostEl} onChange={addPostEl}></textarea>*/}
+            {/*    <div>*/}
+            {/*        <button onClick={onAddPost}>Add post</button>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
             <div className={classes.posts}>
                 {postsItem}
             </div>

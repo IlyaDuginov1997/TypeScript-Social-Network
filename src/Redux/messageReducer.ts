@@ -11,17 +11,14 @@ export type MessagesType = {
 export type DialogComponentType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
-    newMessageText: string
 }
 
-const ADD_NEW_MESSAGE = 'ADD_NEW_MESSAGE'
-const CHANGE_MESSAGE_EL = 'CHANGE_MESSAGE_EL'
+const ADD_NEW_MESSAGE = 'ADD_NEW_MESSAGE';
+const CHANGE_MESSAGE_EL = 'CHANGE_MESSAGE_EL';
 
 export type DispatchActionType = AddMessageType | ChangeMessageElType
 
-export type AddMessageType = {
-    type: typeof ADD_NEW_MESSAGE
-}
+export type AddMessageType = ReturnType<typeof addMessage>
 
 export type ChangeMessageElType = {
     type: typeof CHANGE_MESSAGE_EL
@@ -42,44 +39,28 @@ let initialState: DialogComponentType = {
         {id: 2, message: 'I am fine'},
         {id: 3, message: 'Yo'},
     ],
-    newMessageText: 'It is my first message to you'
-
-}
+};
 
 export function dialogReducer(state = initialState, action: DispatchActionType): DialogComponentType {
     switch (action.type) {
-        case CHANGE_MESSAGE_EL:
+        case ADD_NEW_MESSAGE: {
+            let body = action.message;
             return {
                 ...state,
-                newMessageText: action.messageEl
-            }
-
-        case ADD_NEW_MESSAGE: {
-            let body = state.newMessageText
-            return  {
-                ...state,
-                newMessageText: '',
                 messages: [...state.messages, {
                     id: 5,
                     message: body,
                 }]
-            }
-
+            };
         }
         default:
-            return state
+            return state;
     }
 }
 
-export function addMessageEl(messageEl: string): ChangeMessageElType {
-    return {
-        type: CHANGE_MESSAGE_EL,
-        messageEl: messageEl
-    }
-}
-
-export function addMessage(): AddMessageType {
+export function addMessage(message: string) {
     return {
         type: ADD_NEW_MESSAGE,
-    }
+        message,
+    } as const;
 }
