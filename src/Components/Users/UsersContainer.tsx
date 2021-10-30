@@ -45,12 +45,12 @@ class UsersComponent extends React.Component<UsersPropsType, {}> {
     // }
 
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
 
     onPageChanged = (currentPage: number) => {
-        this.props.getUsers(currentPage, this.props.pageSize)
-    }
+        this.props.getUsers(currentPage, this.props.pageSize);
+    };
 
     render() {
         return (
@@ -67,7 +67,7 @@ class UsersComponent extends React.Component<UsersPropsType, {}> {
                     followUserThunk={this.props.followUserThunk}
                 />
             </>
-        )
+        );
     }
 }
 
@@ -80,8 +80,8 @@ let mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
         currentPage: state.usersComponent.currentPage,
         isFetching: state.usersComponent.isFetching,
         toggleFollowingProcessArray: state.usersComponent.toggleFollowingProcessArray,
-    }
-}
+    };
+};
 
 // старый вариант mapDispatchToProps
 
@@ -112,4 +112,4 @@ export const UsersContainer = connect(mapStateToProps, {
     getUsers,
     unfollowUserThunk,
     followUserThunk,
-})(UsersComponent)
+})(UsersComponent);

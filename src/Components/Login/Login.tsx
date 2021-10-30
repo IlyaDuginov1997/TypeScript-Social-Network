@@ -1,15 +1,27 @@
 import React from 'react';
+import {FormDataType, LoginForm} from './LoginForm';
+import {reduxForm} from 'redux-form';
 
-export type HeaderPropsType = {
+export type LoginPropsType = {}
 
-}
+export function Login(props: LoginPropsType) {
+    const onSubmit = (formData: FormDataType) => {
+        console.log(formData);
+    }
 
-function Login(props: HeaderPropsType) {
     return (
-        <h1>
-            login
-        </h1>
+        <div>
+            <div>
+                <h1>
+                    login
+                </h1>
+            </div>
+            <LoginReduxForm onSubmit={onSubmit}/>
+        </div>
+
     );
 }
+
+const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm);
 
 export default Login;
