@@ -14,14 +14,16 @@ function MyPosts(props: MyPostsPropsType) {
                                                message={p.message}
                                                likesCount={p.likesCount}/>);
 
-    const onSubmit = (formDate: FormDataPostType) => {
-        props.addPost(formDate.myPost);
+    const onSubmit = (formData: FormDataPostType) => {
+        props.addPost(formData.myPosts);
+        console.log(formData);
     };
 
     return (
         <div>
             My posts
-            <MyPostReduxForm onSubmit={onSubmit}/>
+            <MyPostReduxForm
+                onSubmit={onSubmit}/>
             {/*<div>*/}
             {/*    <textarea value={props.newPostText} ref={newPostEl} onChange={addPostEl}></textarea>*/}
             {/*    <div>*/}
