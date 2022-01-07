@@ -1,13 +1,14 @@
 import React from 'react';
-import Header from './Header';
+import {Header} from './Header';
 import {connect} from 'react-redux';
-import {authUserThunk} from '../../Redux/authReducer';
+import {authUserThunk, logout} from '../../Redux/authReducer';
 import {RootReduxState} from '../../Redux/redux-store';
 
 export type HeaderContainerType = {
     login: string | null
     auth: boolean
     authUserThunk: () => void
+    logout: () => void
 }
 
 export type MapStateToPropsType = {
@@ -34,5 +35,5 @@ let mapStateToProps = (state: RootReduxState): MapStateToPropsType => {
 }
 
 
-export const HeaderContainer = connect(mapStateToProps, {authUserThunk})(HeaderComponent)
+export const HeaderContainer = connect(mapStateToProps, {authUserThunk, logout})(HeaderComponent)
 

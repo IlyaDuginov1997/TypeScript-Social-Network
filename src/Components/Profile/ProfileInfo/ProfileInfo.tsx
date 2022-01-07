@@ -25,7 +25,8 @@ function ProfileInfo(props: ProfileInfoPropsType) {
             {/*</div>*/}
             <ProfileStatus
                 updateProfileStatusThunk={props.updateProfileStatusThunk}
-                profileStatus={props.profileStatus}/>
+                profileStatus={props.profileStatus}
+            />
             <div>
                 <img className={classes.profilePhoto}
                      src={props.profile?.photos.large} alt=''/>

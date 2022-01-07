@@ -91,7 +91,7 @@ export function setUsersProfile(profile: GetProfileType): SetUsersProfileType {
     };
 }
 
-export function setProfileStatus(status: any): SetProfileStatusType {
+export function setProfileStatus(status: string): SetProfileStatusType {
     return {
         type: SET_PROFILE_STATUS,
         status

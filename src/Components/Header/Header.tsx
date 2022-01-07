@@ -1,21 +1,35 @@
 import React from 'react';
 import classes from './Header.module.css';
 import {NavLink} from 'react-router-dom';
+import {logout} from '../../Redux/authReducer';
 
 export type HeaderPropsType = {
     login: string | null
     auth: boolean
+    logout: () => void
 }
 
-function Header(props: HeaderPropsType) {
+type LogoutPropsType = {
+    login: string | null
+    logout: () => void
+}
+
+export function Header(props: HeaderPropsType) {
     return (
         <header className={classes.header}>
             <img src='https://untappd.akamaized.net/site/brewery_logos/brewery-438986_7160b.jpeg' alt=''/>
             <span className={classes.loginBlock}>
-                {props.auth ? props.login : <NavLink to={'/login'}> Login </NavLink>}
+                {props.auth ? <Logout login={props.login} logout={props.logout}/> : <NavLink to={'/login'}> Login </NavLink>}
             </span>
         </header>
     );
 }
 
-export default Header;
+function Logout (props: LogoutPropsType) {
+    return (
+        <div>
+            <span>{props.login}</span>
+            <button onClick={() => props.logout()}>Logout</button>
+        </div>
+    )
+}
