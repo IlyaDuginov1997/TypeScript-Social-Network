@@ -1,6 +1,6 @@
 import React from 'react';
 import {WrappedFieldProps} from 'redux-form';
-import classes from './Validator.module.css';
+import classes from './ValidatedForm.module.css';
 
 export type DefaultFormControlType = WrappedFieldProps & {
     children: React.ReactNode

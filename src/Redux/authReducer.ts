@@ -1,6 +1,7 @@
 import {authAPI} from '../API/API';
 import {Dispatch} from 'redux';
 import {ThunkDispatch} from 'redux-thunk';
+import {stopSubmit} from 'redux-form';
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -76,6 +77,11 @@ export const login = (email: string, password: string, rememberMe: boolean,) => 
         authAPI.login(email, password, rememberMe).then(data => {
             if (data.resultCode === 0) {
                 dispatch(authUserThunk());
+            } else {
+                const errorMessage = data.messages.length > 0
+                    ? data.messages[0]
+                    : 'Some error';
+                dispatch(stopSubmit('login', {_error: errorMessage}));
             }
         });
     };

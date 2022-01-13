@@ -33,6 +33,7 @@ export type GetProfileType = {
 export type mapStateToPropsType = {
     profile: GetProfileType | null
     profileStatus: string
+    userId: number | null
 }
 
 export type PathParamsType = {
@@ -40,6 +41,7 @@ export type PathParamsType = {
 }
 
 type ProfileComponentType = {
+    userId: number | null
     profile: GetProfileType | null
     profileStatus: string
     getUserProfileThunk: (userId: string) => void
@@ -53,12 +55,12 @@ type ProfileComponentWithRouterPropsType = RouteComponentProps<PathParamsType> &
 class ProfileComponent extends React.Component<ProfileComponentWithRouterPropsType> {
 
     componentDidMount() {
-        let userId = this.props.match.params.userId
+        let userId = this.props.match.params.userId;
         if (!userId) {
-            userId = '15542'
+            userId = '' + this.props.userId;
         }
-        this.props.getUserProfileThunk(userId)
-        this.props.getProfileStatusThunk(userId)
+        this.props.getUserProfileThunk(userId);
+        this.props.getProfileStatusThunk(userId);
     }
 
     render() {
@@ -68,7 +70,7 @@ class ProfileComponent extends React.Component<ProfileComponentWithRouterPropsTy
             profile={this.props.profile}
             updateProfileStatusThunk={this.props.updateProfileStatusThunk}
             profileStatus={this.props.profileStatus}
-            /*{...this.props}*//>
+            /*{...this.props}*//>;
     }
 }
 
@@ -76,10 +78,11 @@ const mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
     return {
         profile: state.profileComponent.profile,
         profileStatus: state.profileComponent.status,
-    }
-}
+        userId: state.auth.id
+    };
+};
 export const ProfileContainer = compose<React.ComponentType>(
     withAuthRedirect,
     connect(mapStateToProps, {getUserProfileThunk, getProfileStatusThunk, updateProfileStatusThunk}),
     withRouter,
-)(ProfileComponent)
+)(ProfileComponent);

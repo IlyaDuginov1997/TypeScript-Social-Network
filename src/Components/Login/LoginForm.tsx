@@ -2,6 +2,7 @@ import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import React from 'react';
 import {Input} from '../../Common/FormControl/ValidatedForm';
 import {maxLengthCreator, requiredField} from '../../Utils/Validators/Validator';
+import classes from './LoginForm.module.css';
 
 export type FormDataLoginType = {
     login: string
@@ -19,9 +20,14 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataLoginType>> = (props)
                             placeholder={'login'}/></div>
                 <div><Field component={Input} validate={[requiredField, maxLength30]} name={'password'} type={'password'}
                             placeholder={'password'}/></div>
-                <div><Field component={Input} name={'rememberMe'} type={'checkbox'}/></div>
+                <div><Field component={Input} name={'rememberMe'} type={'checkbox'}/>remember me</div>
                 <div>
-                    <button> Remember me</button>
+                    {props.error && <span className={classes.globalFormError}>
+                        {props.error}
+                    </span>}
+                </div>
+                <div>
+                    <button> Login</button>
                 </div>
             </form>
         </div>
