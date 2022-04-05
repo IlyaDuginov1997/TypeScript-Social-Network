@@ -84,14 +84,14 @@ export const followAPI = {
 };
 
 export const profileAPI = {
-    getUserProfile(userId: string) {
+    getUserProfile(userId: number | null) {
         return instance.get<GetProfileType>(`profile/${userId}`)
             .then(response => {
                 return response.data;
             });
     },
 
-    getProfileStatus(userId: string) {
+    getProfileStatus(userId: number | null) {
         return instance.get<string>(`profile/status/${userId}`)
             .then(responce => {
                 return responce.data;

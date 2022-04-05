@@ -98,7 +98,7 @@ export function setProfileStatus(status: string): SetProfileStatusType {
     };
 }
 
-export const getProfileStatusThunk = (userId: string) => {
+export const getProfileStatusThunk = (userId: number | null) => {
     return (dispatch: Dispatch) => {
         profileAPI.getProfileStatus(userId).then(data => {
             dispatch(setProfileStatus(data));
@@ -116,7 +116,7 @@ export const updateProfileStatusThunk = (status: string) => {
     };
 };
 
-export const getUserProfileThunk = (userId: string) => {
+export const getUserProfileThunk = (userId: number | null) => {
     return (dispatch: Dispatch) => {
         profileAPI.getUserProfile(userId).then(data => {
             dispatch(setUsersProfile(data));

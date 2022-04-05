@@ -18,7 +18,7 @@ export type SetAuthUserDataType = {
 }
 
 
-type initialStateType = {
+type InitialStateType = {
     id: number | null
     email: string | null
     login: string | null
@@ -27,14 +27,14 @@ type initialStateType = {
 
 type DispatchActionType = SetAuthUserDataType
 
-let initialState: initialStateType = {
+let initialState: InitialStateType = {
     id: null,
     email: null,
     login: null,
     isAuth: false
 };
 
-export function authReducer(state = initialState, action: DispatchActionType): initialStateType {
+export function authReducer(state = initialState, action: DispatchActionType): InitialStateType {
     switch (action.type) {
         case SET_USER_DATA:
             return {
@@ -60,9 +60,9 @@ export function setAuthUserData(id: number | null, email: string | null, login: 
     };
 }
 
-export const authUserThunk = () => {
+export const authUserThunk = (): any => {
     return (dispatch: Dispatch) => {
-        authAPI.authUser().then(data => {
+        return authAPI.authUser().then(data => {
             if (data.resultCode === 0) {
                 let {id, email, login} = data.data;
                 dispatch(setAuthUserData(id, email, login, true));

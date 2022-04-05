@@ -16,7 +16,6 @@ function MyPosts(props: MyPostsPropsType) {
 
     const onSubmit = (formData: FormDataPostType) => {
         props.addPost(formData.myPosts);
-        console.log(formData);
     };
 
     return (
