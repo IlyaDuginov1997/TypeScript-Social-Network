@@ -3,12 +3,18 @@ import {RootReduxState} from '../../Redux/redux-store';
 import {connect} from 'react-redux';
 import {
   followUserThunk,
-  getUsers,
+  fetchUsers,
   unfollowUserThunk,
   UserType
 } from '../../Redux/usersReducer';
 import Users from './Users';
 import {Preloader} from '../../Common/Preloader/Preloader';
+import {
+  getCurrentPage, getIsFetching,
+  getPageSize, getToggleFollowingProcessArray,
+  getTotalUserCount,
+  getUsers
+} from '../../Redux/users-selectors';
 
 
 type mapStateToPropsType = {
@@ -36,7 +42,7 @@ export type UsersPropsType = {
   currentPage: number
   isFetching: boolean
   toggleFollowingProcessArray: [] | number[]
-  getUsers: (currentPage: number, pageSize: number) => void
+  fetchUsers: (currentPage: number, pageSize: number) => void
   unfollowUserThunk: (userId: number) => void
   followUserThunk: (userId: number) => void
 }
@@ -50,11 +56,11 @@ class UsersComponent extends React.Component<UsersPropsType, {}> {
   // }
 
   componentDidMount() {
-    this.props.getUsers(this.props.currentPage, this.props.pageSize);
+    this.props.fetchUsers(this.props.currentPage, this.props.pageSize);
   }
 
   onPageChanged = (currentPage: number) => {
-    this.props.getUsers(currentPage, this.props.pageSize);
+    this.props.fetchUsers(currentPage, this.props.pageSize);
   };
 
   render() {
@@ -79,12 +85,12 @@ class UsersComponent extends React.Component<UsersPropsType, {}> {
 
 let mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
   return {
-    users: state.usersComponent.users,
-    pageSize: state.usersComponent.pageSize,
-    totalUserCount: state.usersComponent.totalUserCount,
-    currentPage: state.usersComponent.currentPage,
-    isFetching: state.usersComponent.isFetching,
-    toggleFollowingProcessArray: state.usersComponent.toggleFollowingProcessArray,
+    users: getUsers(state),
+    pageSize: getPageSize(state),
+    totalUserCount: getTotalUserCount(state),
+    currentPage: getCurrentPage(state),
+    isFetching: getIsFetching(state),
+    toggleFollowingProcessArray: getToggleFollowingProcessArray(state),
   };
 };
 
@@ -114,7 +120,7 @@ let mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
 // }
 
 export const UsersContainer = connect(mapStateToProps, {
-  getUsers,
+  fetchUsers,
   unfollowUserThunk,
   followUserThunk,
 })(UsersComponent);

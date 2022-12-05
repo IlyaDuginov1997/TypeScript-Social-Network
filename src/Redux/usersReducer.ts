@@ -195,7 +195,7 @@ export function setToggleFollowingInProcess(isFollowingInProcess: boolean, userI
     }
 }
 
-export const getUsers = (currentPage: number, pageSize: number) => {
+export const fetchUsers = (currentPage: number, pageSize: number) => {
     return (dispatch: Dispatch) => {
         dispatch(setToggleIsFetching(true))
         dispatch(setCurrentPage(currentPage))
