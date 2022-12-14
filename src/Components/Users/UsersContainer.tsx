@@ -1,20 +1,22 @@
 import React from 'react';
-import {RootReduxState} from '../../Redux/redux-store';
+import {RootReduxState} from 'src/Redux/redux-store';
 import {connect} from 'react-redux';
 import {
-  followUserThunk,
   fetchUsers,
+  followUserThunk,
   unfollowUserThunk,
   UserType
-} from '../../Redux/usersReducer';
+} from 'src/Redux/usersReducer';
 import Users from './Users';
-import {Preloader} from '../../Common/Preloader/Preloader';
+import {Preloader} from 'src/Common/Preloader/Preloader';
 import {
-  getCurrentPage, getIsFetching,
-  getPageSize, getToggleFollowingProcessArray,
+  getCurrentPage,
+  getIsFetching,
+  getPageSize,
+  getToggleFollowingProcessArray,
   getTotalUserCount,
   getUsers
-} from '../../Redux/users-selectors';
+} from 'src/Redux/users-selectors';
 
 
 type mapStateToPropsType = {
@@ -85,6 +87,7 @@ class UsersComponent extends React.Component<UsersPropsType, {}> {
 
 let mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
   return {
+    // users: getUsersSelector(state),
     users: getUsers(state),
     pageSize: getPageSize(state),
     totalUserCount: getTotalUserCount(state),

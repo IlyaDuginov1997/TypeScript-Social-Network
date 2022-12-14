@@ -17,8 +17,8 @@ export function Header(props: HeaderPropsType) {
   return (
     <header className={classes.header}>
       <img
-        src='https://untappd.akamaized.net/site/brewery_logos/brewery-438986_7160b.jpeg'
-        alt=''/>
+        src='https://cdn.logo.com/hotlink-ok/logo-social.png'
+        alt='logo'/>
       <span className={classes.loginBlock}>
         {
           props.auth

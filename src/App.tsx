@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Navbar from './Components/Navbar/Navbar';
-import {Route, withRouter} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
@@ -9,12 +9,12 @@ import Login from './Components/Login/Login';
 import {DialogsContainer} from './Components/Dialogs/DialogsContainer';
 import {HeaderContainer} from './Components/Header/HeaderContainer';
 import {ProfileContainer} from './Components/Profile/ProfileContainer';
-import {UsersContainer, UsersPropsType} from './Components/Users/UsersContainer';
-import {connect} from "react-redux";
-import {RootReduxState} from "./Redux/redux-store";
-import {appInitializing} from "./Redux/appReducer";
+import {UsersContainer} from './Components/Users/UsersContainer';
+import {connect} from 'react-redux';
+import {RootReduxState} from './Redux/redux-store';
+import {appInitializing} from './Redux/appReducer';
 import {Preloader} from './Common/Preloader/Preloader';
-import {compose} from "redux";
+import {compose} from 'redux';
 
 type AppPropsType = {
   appInitializing: () => void
@@ -28,14 +28,14 @@ type MapStateToPropsType = {
 class App extends React.Component<AppPropsType, {}> {
 
   componentDidMount() {
-    this.props.appInitializing()
+    this.props.appInitializing();
   }
 
   render() {
     if (!this.props.isInitialized) {
       return <div>
         <Preloader/>
-      </div>
+      </div>;
     }
 
     return (
@@ -59,8 +59,8 @@ class App extends React.Component<AppPropsType, {}> {
 const mapStateToProps = (state: RootReduxState): MapStateToPropsType => {
   return {
     isInitialized: state.app.isInitialized,
-  }
-}
+  };
+};
 
 export default compose(
   connect(mapStateToProps, {appInitializing})
