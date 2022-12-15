@@ -18,8 +18,9 @@ const ADD_NEW_POST = 'ADD_NEW_POST';
 const CHANGE_POST_EL = 'CHANGE_POST_EL';
 const SET_USERS_PROFILE = 'SET_USERS_PROFILE';
 const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS';
+export const DELETE_POST = 'DELETE_POST';
 
-export type DispatchActionType = AddNewPostType | ChangePostElType | SetUsersProfileType | SetProfileStatusType
+export type DispatchActionType = AddNewPostType | ChangePostElType | SetUsersProfileType | SetProfileStatusType | DeletePostType
 
 export type AddNewPostType = ReturnType<typeof AddPostActionCreator>
 
@@ -36,6 +37,11 @@ export type SetUsersProfileType = {
 export type SetProfileStatusType = {
     type: typeof SET_PROFILE_STATUS
     status: string
+}
+
+export type DeletePostType = {
+    type: typeof DELETE_POST
+    postId: number
 }
 
 let initialState: ProfileComponentType = {
@@ -72,6 +78,11 @@ export function profileReducer(state = initialState, action: DispatchActionType)
                 ...state,
                 status: action.status
             };
+        case DELETE_POST:
+            return {
+                ...state,
+                posts: state.posts.filter(post => post.id !== action.postId)
+            };
         default:
             return state;
     }
@@ -95,6 +106,13 @@ export function setProfileStatus(status: string): SetProfileStatusType {
     return {
         type: SET_PROFILE_STATUS,
         status
+    };
+}
+
+export function deletePost(postId: number): DeletePostType {
+    return {
+        type: DELETE_POST,
+        postId,
     };
 }
 
