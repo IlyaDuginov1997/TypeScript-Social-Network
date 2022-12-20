@@ -1,7 +1,7 @@
-import {Dispatch} from 'redux';
-import {authUserThunk} from '../Redux/authReducer';
+import { Dispatch } from 'redux';
+import { authUserThunk } from 'src/Redux/authReducer';
 
-const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS';
+const INITIALIZED_SUCCESS = 'app/INITIALIZED_SUCCESS';
 
 export type InitializedSuccess = {
   type: typeof INITIALIZED_SUCCESS
@@ -15,7 +15,7 @@ type InitialStateType = {
 type DispatchActionType = InitializedSuccess
 
 let initialState: InitialStateType = {
-  isInitialized: false
+  isInitialized: false,
 };
 
 export function appReducer(state = initialState, action: DispatchActionType): InitialStateType {
@@ -32,13 +32,13 @@ export function appReducer(state = initialState, action: DispatchActionType): In
 
 const appInitializedAC = (): InitializedSuccess => {
   return {
-    type: INITIALIZED_SUCCESS
-  }
-}
+    type: INITIALIZED_SUCCESS,
+  };
+};
 
 export const appInitializing = () => {
   return (dispatch: Dispatch) => {
-    const dispatchResult = dispatch(authUserThunk())
-    dispatchResult.then(() => dispatch(appInitializedAC()))
+    const dispatchResult = dispatch(authUserThunk());
+    dispatchResult.then(() => dispatch(appInitializedAC()));
   };
 };

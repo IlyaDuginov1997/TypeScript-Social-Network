@@ -1,15 +1,10 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {
-  getProfileStatusThunk,
-  getUserProfileThunk,
-  updateProfileStatusThunk
-} from '../../Redux/profileReducer';
-import {RootReduxState} from '../../Redux/redux-store';
-import Profile from './Profile';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {withAuthRedirect} from '../WithAuthRedirectComponent/WithAuthRedirectComponent';
-import {compose} from 'redux';
+import { connect } from 'react-redux';
+import { getProfileStatusThunk, getUserProfileThunk, updateProfileStatusThunk } from 'src/Redux/profileReducer';
+import { RootReduxState } from 'src/Redux/redux-store';
+import Profile from 'src/Components/Profile/Profile';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 
 
 export type GetProfileType = {
@@ -67,7 +62,7 @@ class ProfileComponent extends React.Component<ProfileComponentWithRouterPropsTy
     if (!userId) {
       userId = this.props.userId;
       if (!userId) {
-        this.props.history.push('/login')
+        this.props.history.push('/login');
       }
     }
     this.props.getUserProfileThunk(userId);
@@ -81,7 +76,7 @@ class ProfileComponent extends React.Component<ProfileComponentWithRouterPropsTy
       profile={this.props.profile}
       updateProfileStatusThunk={this.props.updateProfileStatusThunk}
       profileStatus={this.props.profileStatus}
-      /*{...this.props}*//>;
+      /*{...this.props}*/ />;
   }
 }
 
@@ -89,7 +84,7 @@ const mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
   return {
     profile: state.profileComponent.profile,
     profileStatus: state.profileComponent.status,
-    userId: state.auth.id
+    userId: state.auth.id,
   };
 };
 export const ProfileContainer = compose<React.ComponentType>(
@@ -97,7 +92,7 @@ export const ProfileContainer = compose<React.ComponentType>(
   connect(mapStateToProps, {
     getUserProfileThunk,
     getProfileStatusThunk,
-    updateProfileStatusThunk
+    updateProfileStatusThunk,
   }),
   withRouter,
 )(ProfileComponent);

@@ -13,8 +13,8 @@ export type DialogComponentType = {
     messages: Array<MessagesType>
 }
 
-const ADD_NEW_MESSAGE = 'ADD_NEW_MESSAGE';
-const CHANGE_MESSAGE_EL = 'CHANGE_MESSAGE_EL';
+const ADD_NEW_MESSAGE = 'messages/ADD_NEW_MESSAGE';
+const CHANGE_MESSAGE_EL = 'messages/CHANGE_MESSAGE_EL';
 
 export type DispatchActionType = AddMessageType | ChangeMessageElType
 

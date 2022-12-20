@@ -1,6 +1,6 @@
 import React from 'react';
-import classes from './Header.module.css';
-import {NavLink} from 'react-router-dom';
+import classes from 'src/Components/Header/Header.module.css';
+import { NavLink } from 'react-router-dom';
 
 export type HeaderPropsType = {
   login: string | null
@@ -18,11 +18,11 @@ export function Header(props: HeaderPropsType) {
     <header className={classes.header}>
       <img
         src='https://cdn.logo.com/hotlink-ok/logo-social.png'
-        alt='logo'/>
+        alt='logo' />
       <span className={classes.loginBlock}>
         {
           props.auth
-            ? <Logout login={props.login} logout={props.logout}/>
+            ? <Logout login={props.login} logout={props.logout} />
             : <NavLink to={'/login'}> Login </NavLink>
         }
       </span>
@@ -36,5 +36,5 @@ function Logout(props: LogoutPropsType) {
       <span>{props.login}</span>
       <button onClick={() => props.logout()}>Logout</button>
     </div>
-  )
+  );
 }
