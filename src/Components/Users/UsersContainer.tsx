@@ -1,32 +1,32 @@
 import React from 'react';
-import {RootReduxState} from 'src/Redux/redux-store';
-import {connect} from 'react-redux';
+import { RootReduxState } from 'src/Redux/redux-store';
+import { connect } from 'react-redux';
 import {
   fetchUsers,
   followUserThunk,
+  setCurrentPage,
   unfollowUserThunk,
-  UserType
+  UserType,
 } from 'src/Redux/usersReducer';
 import Users from './Users';
-import {Preloader} from 'src/Common/Preloader/Preloader';
+import { Preloader } from 'src/Common/Preloader/Preloader';
 import {
   getCurrentPage,
   getIsFetching,
   getPageSize,
   getToggleFollowingProcessArray,
   getTotalUserCount,
-  getUsers
+  getUsers,
 } from 'src/Redux/users-selectors';
 
-
 type mapStateToPropsType = {
-  users: Array<UserType>
-  pageSize: number
-  totalUserCount: number
-  currentPage: number
-  isFetching: boolean
-  toggleFollowingProcessArray: [] | number[]
-}
+  users: Array<UserType>;
+  pageSize: number;
+  totalUserCount: number;
+  currentPage: number;
+  isFetching: boolean;
+  toggleFollowingProcessArray: [] | number[];
+};
 // работает сто старым вариантом mapDispatchToProps
 /*type mapDispatchToPropsType = {
     follow: (userId: number) => void
@@ -38,16 +38,19 @@ type mapStateToPropsType = {
 }*/
 
 export type UsersPropsType = {
-  users: Array<UserType>
-  pageSize: number
-  totalUserCount: number
-  currentPage: number
-  isFetching: boolean
-  toggleFollowingProcessArray: [] | number[]
-  fetchUsers: (currentPage: number, pageSize: number) => void
-  unfollowUserThunk: (userId: number) => void
-  followUserThunk: (userId: number) => void
-}
+  users: Array<UserType>;
+  pageSize: number;
+  totalUserCount: number;
+  currentPage: number;
+  isFetching: boolean;
+  toggleFollowingProcessArray: [] | number[];
+  fetchUsers: (currentPage: number, pageSize: number) => void;
+  unfollowUserThunk: (userId: number) => void;
+  followUserThunk: (userId: number) => void;
+  setCurrentPage: (currentPage: number) => void;
+};
+
+const START_PAGE = 1;
 
 class UsersComponent extends React.Component<UsersPropsType, {}> {
   // закоментировал, что бы избавится от warnings
@@ -65,10 +68,14 @@ class UsersComponent extends React.Component<UsersPropsType, {}> {
     this.props.fetchUsers(currentPage, this.props.pageSize);
   };
 
+  componentWillUnmount() {
+    this.props.setCurrentPage(START_PAGE);
+  }
+
   render() {
     return (
       <>
-        {this.props.isFetching ? <Preloader/> : null}
+        {this.props.isFetching ? <Preloader /> : null}
         <Users
           users={this.props.users}
           totalUserCount={this.props.totalUserCount}
@@ -83,7 +90,6 @@ class UsersComponent extends React.Component<UsersPropsType, {}> {
     );
   }
 }
-
 
 let mapStateToProps = (state: RootReduxState): mapStateToPropsType => {
   return {
@@ -126,4 +132,5 @@ export const UsersContainer = connect(mapStateToProps, {
   fetchUsers,
   unfollowUserThunk,
   followUserThunk,
+  setCurrentPage,
 })(UsersComponent);
