@@ -6,27 +6,27 @@ import { NavLink } from 'react-router-dom';
 import { Paginator } from 'src/Common/Paginator/Paginator';
 
 export type UsersPropsType = {
-  users: Array<UserType>
-  pageSize: number
-  totalUserCount: number
-  currentPage: number
-  onPageChanged: (currentPage: number) => void
-  toggleFollowingProcessArray: [] | number[]
-  unfollowUserThunk: (userId: number) => void
-  followUserThunk: (userId: number) => void
-}
+  users: Array<UserType>;
+  pageSize: number;
+  totalUserCount: number;
+  currentPage: number;
+  onPageChanged: (currentPage: number) => void;
+  toggleFollowingProcessArray: [] | number[];
+  unfollowUserThunk: (userId: number) => void;
+  followUserThunk: (userId: number) => void;
+};
 
-const Users: React.FC<UsersPropsType> = (
-  {
-    totalUserCount,
-    currentPage,
-    pageSize,
-    users,
-    toggleFollowingProcessArray,
-    followUserThunk,
-    unfollowUserThunk,
-    onPageChanged,
-  }) => {
+const Users: React.FC<UsersPropsType> = ({
+  totalUserCount,
+  currentPage,
+  pageSize,
+  users,
+  toggleFollowingProcessArray,
+  followUserThunk,
+  unfollowUserThunk,
+  onPageChanged,
+}) => {
+  const portionSize = 10;
 
   return (
     <div>
@@ -35,42 +35,57 @@ const Users: React.FC<UsersPropsType> = (
         currentPage={currentPage}
         pageSize={pageSize}
         onPageChanged={onPageChanged}
+        portionSize={portionSize}
       />
       {users.map(u => {
-        return (<div key={u.id}>
-                    <span>
-                        <div>
-                            <NavLink to={'/profile/' + u.id}>
-                            <img className={classes.avatar} src={u.photos.small ? u.photos.small : user}
-                                 alt={'sorry, we have some troubles'} />
-                            </NavLink>
-                        </div>
-                        <div>
-                            {u.followed
-                              ? <button
-                                disabled={toggleFollowingProcessArray.some(id => id === u.id)}
-                                onClick={() => unfollowUserThunk(u.id)}> Unfollow </button>
+        return (
+          <div key={u.id}>
+            <span>
+              <div>
+                <NavLink to={'/profile/' + u.id}>
+                  <img
+                    className={classes.avatar}
+                    src={u.photos.small ? u.photos.small : user}
+                    alt={'sorry, we have some troubles'}
+                  />
+                </NavLink>
+              </div>
+              <div>
+                {u.followed ? (
+                  <button
+                    disabled={toggleFollowingProcessArray.some(id => id === u.id)}
+                    onClick={() => unfollowUserThunk(u.id)}
+                  >
+                    {' '}
+                    Unfollow{' '}
+                  </button>
+                ) : (
+                  <button
+                    disabled={toggleFollowingProcessArray.some(id => id === u.id)}
+                    onClick={() => followUserThunk(u.id)}
+                  >
+                    {' '}
+                    Follow{' '}
+                  </button>
+                )}
+              </div>
+            </span>
+            <span>
+              <span>
+                <div>{u.name}</div>
+                <div>{u.status}</div>
+              </span>
 
-                              : <button
-                                disabled={toggleFollowingProcessArray.some(id => id === u.id)}
-                                onClick={() => followUserThunk(u.id)}> Follow </button>
-                            }
-                        </div>
-                    </span>
-          <span>
-                        <span>
-                            <div>{u.name}</div>
-                            <div>{u.status}</div>
-                        </span>
-
-                        <span>
-                            <div>{'u.location.country'}</div>
-                            <div>{'u.location.cityName'}</div>
-                        </span>
-                    </span>
-        </div>);
+              <span>
+                <div>{'u.location.country'}</div>
+                <div>{'u.location.cityName'}</div>
+              </span>
+            </span>
+          </div>
+        );
       })}
-    </div>);
+    </div>
+  );
 };
 
 export default Users;
