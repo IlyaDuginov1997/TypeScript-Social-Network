@@ -31,7 +31,7 @@ export type loginDataType = {
 const instance = axios.create({
   withCredentials: true,
   headers: {
-    'API-KEY': 'e5b738f6-4744-4b59-9452-509c57fc296b',
+    'API-KEY': '57c1b71f-e799-4641-88c4-164710395dd0',
   },
   baseURL: 'https://social-network.samuraijs.com/api/1.0/',
 });
