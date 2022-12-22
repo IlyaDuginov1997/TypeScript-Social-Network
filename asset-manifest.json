@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/TypeScript-Social-Network/static/css/main.612b7866.chunk.css",
-    "main.js": "/TypeScript-Social-Network/static/js/main.73f9c598.chunk.js",
-    "main.js.map": "/TypeScript-Social-Network/static/js/main.73f9c598.chunk.js.map",
+    "main.js": "/TypeScript-Social-Network/static/js/main.cca99494.chunk.js",
+    "main.js.map": "/TypeScript-Social-Network/static/js/main.cca99494.chunk.js.map",
     "runtime-main.js": "/TypeScript-Social-Network/static/js/runtime-main.a12888a4.js",
     "runtime-main.js.map": "/TypeScript-Social-Network/static/js/runtime-main.a12888a4.js.map",
     "static/js/2.3caf70b3.chunk.js": "/TypeScript-Social-Network/static/js/2.3caf70b3.chunk.js",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.a12888a4.js",
     "static/js/2.3caf70b3.chunk.js",
     "static/css/main.612b7866.chunk.css",
-    "static/js/main.73f9c598.chunk.js"
+    "static/js/main.cca99494.chunk.js"
   ]
 }
