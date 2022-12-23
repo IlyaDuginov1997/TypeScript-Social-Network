@@ -3,51 +3,64 @@ import { profileAPI } from 'src/API/API';
 import { Dispatch } from 'redux';
 
 export type PostsType = {
-  id: number
-  message: string
-  likesCount: number
-}
+  id: number;
+  message: string;
+  likesCount: number;
+};
 
 export type ProfileComponentType = {
-  posts: Array<PostsType>
-  profile: GetProfileType | null
-  status: string
-}
+  posts: Array<PostsType>;
+  profile: GetProfileType | null;
+  // profile: any;
+  status: string;
+};
+
+export type ProfilePhotoType = {
+  small: string;
+  large: string;
+};
 
 const ADD_NEW_POST = 'profile/ADD_NEW_POST';
 const CHANGE_POST_EL = 'profile/CHANGE_POST_EL';
 const SET_USERS_PROFILE = 'profile/SET_USERS_PROFILE';
 const SET_PROFILE_STATUS = 'profile/SET_PROFILE_STATUS';
 export const DELETE_POST = 'profile/DELETE_POST';
+const CHANGE_PROFILE_PHOTO = 'profile/CHANGE_PROFILE_PHOTO';
 
 export type DispatchActionType =
-  AddNewPostType
+  | AddNewPostType
   | ChangePostElType
   | SetUsersProfileType
   | SetProfileStatusType
   | DeletePostType
+  | ChangeProfilePhotoType;
 
-export type AddNewPostType = ReturnType<typeof AddPostActionCreator>
+export type AddNewPostType = ReturnType<typeof AddPostActionCreator>;
 
 export type ChangePostElType = {
-  type: typeof CHANGE_POST_EL
-  postEl: string
-}
+  type: typeof CHANGE_POST_EL;
+  postEl: string;
+};
 
 export type SetUsersProfileType = {
-  type: typeof SET_USERS_PROFILE
-  profile: GetProfileType
-}
+  type: typeof SET_USERS_PROFILE;
+  profile: GetProfileType;
+};
 
 export type SetProfileStatusType = {
-  type: typeof SET_PROFILE_STATUS
-  status: string
-}
+  type: typeof SET_PROFILE_STATUS;
+  status: string;
+};
 
 export type DeletePostType = {
-  type: typeof DELETE_POST
-  postId: number
-}
+  type: typeof DELETE_POST;
+  postId: number;
+};
+
+export type ChangeProfilePhotoType = {
+  type: typeof CHANGE_PROFILE_PHOTO;
+  profilePhotos: ProfilePhotoType;
+};
 
 let initialState: ProfileComponentType = {
   posts: [
@@ -60,9 +73,11 @@ let initialState: ProfileComponentType = {
   status: '',
 };
 
-export function profileReducer(state = initialState, action: DispatchActionType): ProfileComponentType {
+export function profileReducer(
+  state = initialState,
+  action: DispatchActionType,
+): ProfileComponentType {
   switch (action.type) {
-
     case ADD_NEW_POST:
       let newPost = {
         id: 5,
@@ -87,6 +102,13 @@ export function profileReducer(state = initialState, action: DispatchActionType)
       return {
         ...state,
         posts: state.posts.filter(post => post.id !== action.postId),
+      };
+    case CHANGE_PROFILE_PHOTO:
+      return {
+        ...state,
+        profile: state.profile !== null
+          ? { ...state.profile, photos: {...action.profilePhotos} }
+          : null,
       };
     default:
       return state;
@@ -121,6 +143,13 @@ export function deletePost(postId: number): DeletePostType {
   };
 }
 
+export function setUsersPhoto(profilePhotos: ProfilePhotoType): ChangeProfilePhotoType {
+  return {
+    type: CHANGE_PROFILE_PHOTO,
+    profilePhotos,
+  };
+}
+
 export const getProfileStatusThunk = (userId: number | null) => {
   return async (dispatch: Dispatch) => {
     const data = await profileAPI.getProfileStatus(userId);
@@ -142,5 +171,15 @@ export const getUserProfileThunk = (userId: number | null) => {
   return async (dispatch: Dispatch) => {
     const data = await profileAPI.getUserProfile(userId);
     dispatch(setUsersProfile(data));
+  };
+};
+
+export const updateProfilePhotoThunk = (file: File) => {
+  return async (dispatch: Dispatch) => {
+    const data = await profileAPI.updateProfilePhoto(file);
+
+    if (data.resultCode === 0) {
+      dispatch(setUsersPhoto(data.data.photos));
+    }
   };
 };

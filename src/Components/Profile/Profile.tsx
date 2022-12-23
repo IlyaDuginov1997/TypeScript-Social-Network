@@ -1,26 +1,33 @@
 import React from 'react';
-import classes from './Profile.module.css'
+import classes from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
-import {GetProfileType} from './ProfileContainer';
+import { GetProfileType } from './ProfileContainer';
 
 export type ProfileType = {
-    profile: GetProfileType | null
-    profileStatus: string
-    updateProfileStatusThunk: (status: string) => void
-}
+  profile: GetProfileType | null;
+  profileStatus: string;
+  updateProfileStatusThunk: (status: string) => void;
+  updateProfilePhotoThunk: (file: File) => void;
+};
 
-function Profile(props: ProfileType) {
-
-    return (
-        <div className={classes.content}>
-            <ProfileInfo
-                updateProfileStatusThunk={props.updateProfileStatusThunk}
-                profileStatus={props.profileStatus}
-                profile={props.profile}/>
-            <MyPostsContainer/>
-        </div>
-    );
-}
+const Profile: React.FC<ProfileType> = ({
+  profile,
+  profileStatus,
+  updateProfilePhotoThunk,
+  updateProfileStatusThunk,
+}) => {
+  return (
+    <div className={classes.content}>
+      <ProfileInfo
+        updateProfileStatusThunk={updateProfileStatusThunk}
+        updateProfilePhotoThunk={updateProfilePhotoThunk}
+        profileStatus={profileStatus}
+        profile={profile}
+      />
+      <MyPostsContainer />
+    </div>
+  );
+};
 
 export default Profile;

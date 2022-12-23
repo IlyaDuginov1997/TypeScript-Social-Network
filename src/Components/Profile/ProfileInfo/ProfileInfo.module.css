@@ -7,3 +7,23 @@
     width: 350px;
     height: 350px;
 }
+
+.changePhotoBlock {
+    width: 160px;
+    margin-bottom: 30px;
+    border: 1px solid red;
+}
+
+.changePhotoLabel {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.changePhotoLabel input {
+    display: none;
+}
+
+.changePhotoLabel img {
+    width: 100px;
+}

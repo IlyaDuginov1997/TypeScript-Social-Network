@@ -1,65 +1,84 @@
-import React from 'react';
-import {GetProfileType} from '../ProfileContainer';
-import {Preloader} from '../../../Common/Preloader/Preloader';
-import classes from './ProfileInfo.module.css';
-import {ProfileStatus} from './ProfileStatus';
+import React, { ChangeEvent } from 'react';
+import { GetProfileType } from 'src/Components/Profile/ProfileContainer';
+import { Preloader } from 'src/Common/Preloader/Preloader';
+import classes from 'src/Components/Profile/ProfileInfo/ProfileInfo.module.css';
+import { ProfileStatus } from 'src/Components/Profile/ProfileInfo/ProfileStatus';
+import user from 'src/Assets/Images/user.jpg';
+import camera from 'src/Assets/Images/camera.svg';
 
 export type ProfileInfoPropsType = {
-    profile: GetProfileType | null
-    profileStatus: string
-    updateProfileStatusThunk: (status: string) => void
-}
+  profile: GetProfileType | null;
+  profileStatus: string;
+  updateProfileStatusThunk: (status: string) => void;
+  updateProfilePhotoThunk: (file: File) => void;
+};
 
-function ProfileInfo(props: ProfileInfoPropsType) {
+const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
+  profile,
+  profileStatus,
+  updateProfileStatusThunk,
+  updateProfilePhotoThunk,
+}) => {
+  if (!profile) {
+    return <Preloader />;
+  }
 
-    if (!props.profile) {
-        return <Preloader/>
+  const profilePhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const photoFile = e.target.files?.[0];
+
+    if (photoFile) {
+      updateProfilePhotoThunk(photoFile);
     }
+  };
 
-    return (
-        <div>
-            {/*<div>*/}
-            {/*    <img className={classes.content}*/}
-            {/*         src='https://st2.depositphotos.com/3106839/7689/i/600/depositphotos_76899721-stock-photo-barley-beans-in-wooden-plate.jpg'*/}
-            {/*         alt=''/>*/}
-            {/*</div>*/}
-            <ProfileStatus
-                updateProfileStatusThunk={props.updateProfileStatusThunk}
-                profileStatus={props.profileStatus}
-            />
-            <div>
-                <img className={classes.profilePhoto}
-                     src={props.profile?.photos.large} alt=''/>
-                <div>
-                    About me: {props.profile.aboutMe}
-                    <p/>
-                    Fullname: {props.profile.fullName}
-                    <p/>
-                    Looking for a job: {props.profile.lookingForAJob}
-                    <p/>
-
-                    <div>
-                        Facebook: {props.profile.contacts.facebook}
-                        <p/>
-                        VK: {props.profile.contacts.vk}
-                        <p/>
-                        Github: {props.profile.contacts.github}
-                        <p/>
-                        Twitter: {props.profile.contacts.twitter}
-                        <p/>
-                        Website: {props.profile.contacts.website}
-                        <p/>
-                        Instagram: {props.profile.contacts.instagram}
-                        <p/>
-                        MainLink: {props.profile.contacts.mainLink}
-                        <p/>
-                        Youtube: {props.profile.contacts.youtube}
-                    </div>
-                </div>
-
-            </div>
+  return (
+    <div>
+      <ProfileStatus
+        updateProfileStatusThunk={updateProfileStatusThunk}
+        profileStatus={profileStatus}
+      />
+      <div>
+        <img
+          className={classes.profilePhoto}
+          src={profile?.photos.large ? profile.photos.large : user}
+          alt="Profile photo"
+        />
+        <div className={classes.changePhotoBlock}>
+          <label className={classes.changePhotoLabel}>
+            Change profile photo
+            <img src={camera} alt="" />
+            <input type="file" accept="image/*" onChange={profilePhotoChange} />
+          </label>
         </div>
-    );
-}
+
+        <div>
+          About me: {profile.aboutMe}
+          <p />
+          FullName: {profile.fullName}
+          <p />
+          Looking for a job: {profile.lookingForAJob}
+          <p />
+          <div>
+            Facebook: {profile.contacts.facebook}
+            <p />
+            VK: {profile.contacts.vk}
+            <p />
+            Github: {profile.contacts.github}
+            <p />
+            Twitter: {profile.contacts.twitter}
+            <p />
+            Website: {profile.contacts.website}
+            <p />
+            Instagram: {profile.contacts.instagram}
+            <p />
+            MainLink: {profile.contacts.mainLink}
+            <p />
+            Youtube: {profile.contacts.youtube}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default ProfileInfo;

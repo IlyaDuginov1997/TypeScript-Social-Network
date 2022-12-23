@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
   getProfileStatusThunk,
-  getUserProfileThunk,
+  getUserProfileThunk, updateProfilePhotoThunk,
   updateProfileStatusThunk,
 } from 'src/Redux/profileReducer';
 import { RootReduxState } from 'src/Redux/redux-store';
@@ -49,6 +49,7 @@ type ProfileComponentType = {
   getUserProfileThunk: (userId: number | null) => void;
   getProfileStatusThunk: (userId: number | null) => void;
   updateProfileStatusThunk: (status: string) => void;
+  updateProfilePhotoThunk: (file: File) => void;
 };
 
 type ProfileComponentWithRouterPropsType = RouteComponentProps<PathParamsType> &
@@ -90,6 +91,7 @@ class ProfileComponent extends React.Component<ProfileComponentWithRouterPropsTy
       <Profile
         profile={this.props.profile}
         updateProfileStatusThunk={this.props.updateProfileStatusThunk}
+        updateProfilePhotoThunk={this.props.updateProfilePhotoThunk}
         profileStatus={this.props.profileStatus}
         /*{...this.props}*/
       />
@@ -110,6 +112,7 @@ export const ProfileContainer = compose<React.ComponentType>(
     getUserProfileThunk,
     getProfileStatusThunk,
     updateProfileStatusThunk,
+    updateProfilePhotoThunk,
   }),
   withRouter,
 )(ProfileComponent);

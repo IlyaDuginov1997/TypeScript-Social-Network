@@ -4,7 +4,7 @@ import { store } from 'src/Redux/redux-store';
 import ReactDOM from 'react-dom';
 import App from 'src/App';
 import reportWebVitals from 'src/reportWebVitals';
-import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 ReactDOM.render(
