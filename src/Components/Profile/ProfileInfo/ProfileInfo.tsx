@@ -11,6 +11,7 @@ export type ProfileInfoPropsType = {
   profileStatus: string;
   updateProfileStatusThunk: (status: string) => void;
   updateProfilePhotoThunk: (file: File) => void;
+  isOwner: boolean;
 };
 
 const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
@@ -18,6 +19,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
   profileStatus,
   updateProfileStatusThunk,
   updateProfilePhotoThunk,
+  isOwner,
 }) => {
   if (!profile) {
     return <Preloader />;
@@ -43,20 +45,22 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
           src={profile?.photos.large ? profile.photos.large : user}
           alt="Profile photo"
         />
-        <div className={classes.changePhotoBlock}>
-          <label className={classes.changePhotoLabel}>
-            Change profile photo
-            <img src={camera} alt="" />
-            <input type="file" accept="image/*" onChange={profilePhotoChange} />
-          </label>
-        </div>
+        {isOwner && (
+          <div className={classes.changePhotoBlock}>
+            <label className={classes.changePhotoLabel}>
+              Change profile photo
+              <img src={camera} alt="" />
+              <input type="file" accept="image/*" onChange={profilePhotoChange} />
+            </label>
+          </div>
+        )}
 
         <div>
           About me: {profile.aboutMe}
           <p />
           FullName: {profile.fullName}
           <p />
-          Looking for a job: {profile.lookingForAJob}
+          Looking for a job: {profile.lookingForAJob ? 'Yes' : 'No'}
           <p />
           <div>
             Facebook: {profile.contacts.facebook}

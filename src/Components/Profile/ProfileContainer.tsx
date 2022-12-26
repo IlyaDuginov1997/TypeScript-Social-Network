@@ -93,6 +93,7 @@ class ProfileComponent extends React.Component<ProfileComponentWithRouterPropsTy
         updateProfileStatusThunk={this.props.updateProfileStatusThunk}
         updateProfilePhotoThunk={this.props.updateProfilePhotoThunk}
         profileStatus={this.props.profileStatus}
+        isOwner={!this.props.match.params.userId}
         /*{...this.props}*/
       />
     );

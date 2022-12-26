@@ -9,6 +9,7 @@ export type ProfileType = {
   profileStatus: string;
   updateProfileStatusThunk: (status: string) => void;
   updateProfilePhotoThunk: (file: File) => void;
+  isOwner: boolean;
 };
 
 const Profile: React.FC<ProfileType> = ({
@@ -16,6 +17,7 @@ const Profile: React.FC<ProfileType> = ({
   profileStatus,
   updateProfilePhotoThunk,
   updateProfileStatusThunk,
+  isOwner,
 }) => {
   return (
     <div className={classes.content}>
@@ -24,6 +26,7 @@ const Profile: React.FC<ProfileType> = ({
         updateProfilePhotoThunk={updateProfilePhotoThunk}
         profileStatus={profileStatus}
         profile={profile}
+        isOwner={isOwner}
       />
       <MyPostsContainer />
     </div>

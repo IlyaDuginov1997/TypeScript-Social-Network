@@ -103,8 +103,7 @@ export const profileAPI = {
 
   updateProfilePhoto(file: File) {
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('fileName', file.name);
+    formData.append('image', file);
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
