@@ -1,27 +1,30 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import {
   getProfileStatusThunk,
-  getUserProfileThunk, updateProfilePhotoThunk,
+  getUserProfileThunk,
+  updateProfilePhotoThunk,
   updateProfileStatusThunk,
 } from 'src/Redux/profileReducer';
-import { RootReduxState } from 'src/Redux/redux-store';
+import {RootReduxState} from 'src/Redux/redux-store';
 import Profile from 'src/Components/Profile/Profile';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { compose } from 'redux';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {compose} from 'redux';
+
+export type ContactsType = {
+  facebook: string;
+  website: null;
+  vk: string;
+  twitter: string;
+  instagram: string;
+  youtube: null;
+  github: string;
+  mainLink: null;
+}
 
 export type GetProfileType = {
   aboutMe: string;
-  contacts: {
-    facebook: string;
-    website: null;
-    vk: string;
-    twitter: string;
-    instagram: string;
-    youtube: null;
-    github: string;
-    mainLink: null;
-  };
+  contacts: ContactsType;
   lookingForAJob: boolean;
   lookingForAJobDescription: string;
   fullName: string;
