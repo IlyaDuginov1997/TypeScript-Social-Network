@@ -1,8 +1,8 @@
 import React from 'react';
-import classes from './Profile.module.css';
-import ProfileInfo from './ProfileInfo/ProfileInfo';
-import MyPostsContainer from './MyPosts/MyPostsContainer';
-import { GetProfileType } from './ProfileContainer';
+import classes from 'src/Components/Profile/Profile.module.css';
+import MyPostsContainer from 'src/Components/Profile/MyPosts/MyPostsContainer';
+import { GetProfileType } from 'src/Components/Profile/ProfileContainer';
+import { ProfileInfo } from 'src/Components/Profile/ProfileInfo/ProfileInfo';
 
 export type ProfileType = {
   profile: GetProfileType | null;

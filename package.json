@@ -4,18 +4,23 @@
   "private": true,
   "homepage": "https://IlyaDuginov1997.github.io/TypeScript-Social-Network",
   "dependencies": {
+    "@hookform/error-message": "^2.0.1",
+    "@hookform/resolvers": "^2.9.10",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@types/jest": "^26.0.15",
+    "@types/lodash.get": "^4.4.7",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/redux-form": "^8.3.3",
     "axios": "^0.21.1",
     "gh-pages": "^3.2.0",
+    "lodash.get": "^4.4.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.41.1",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -24,7 +29,8 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.1.7",
     "typescript": "^4.1.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
