@@ -13,6 +13,7 @@ export const ProfileFormData: React.FC<ProfileFormDataPropsType> = ({
       { isOwner && <button onClick={editModeHandle}>Change profile</button>}
       <Link property={'about me'} value={profile.aboutMe} />
       <Link property={'fullName'} value={profile.fullName} />
+      <Link property={'looking for a job description'} value={profile.lookingForAJobDescription} />
       <Link
         property={'looking for a job'}
         value={profile.lookingForAJob ? 'Yes' : 'No'}

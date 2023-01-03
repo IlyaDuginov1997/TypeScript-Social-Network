@@ -4,43 +4,84 @@ import { FormInput } from 'src/Common/InputForm/InputForm';
 import { validationSchema } from 'src/Validation/schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ProfileFormPropsType } from 'src/Components/Profile/ProfileInfo/ProfileForm/types';
+import { GetProfileType } from 'src/Components/Profile/ProfileContainer';
 
-export type RegistrationFormFields = {
-  firstName: string;
-};
+export type ProfileFormFields = Omit<GetProfileType, 'userId' | 'photos'>;
 
 export const ProfileForm: FC<ProfileFormPropsType> = ({
   profile,
   isOwner,
   editModeOff,
+  updateProfileDataThunk,
 }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegistrationFormFields>({
-    resolver: yupResolver(validationSchema),
+    setError,
+  } = useForm<ProfileFormFields>({
+    resolver: yupResolver(validationSchema.profile),
   });
 
-  const onSubmit = handleSubmit(data => {
-    console.log('submitting...');
-    console.log('data', data);
-    editModeOff();
+  const onSubmit = handleSubmit(async data => {
+    const errorMessages = await updateProfileDataThunk(data);
+
+    if (errorMessages) {
+      console.log('we have some errors: ', errorMessages);
+    } else {
+      editModeOff();
+    }
   });
 
   return (
     <form onSubmit={onSubmit}>
-      <FormInput<RegistrationFormFields>
-        id='firstName'
-        type='text'
-        name='firstName'
-        label='First Name'
-        placeholder='First Name'
-        className='mb-2'
+      <FormInput<ProfileFormFields>
+        id={'aboutMe'}
+        label={'aboutMe'}
         register={register}
-        // rules={{ required: 'You must enter your first name.' }}
+        name={'aboutMe'}
         errors={errors}
       />
+
+      <FormInput<ProfileFormFields>
+        id={'fullName'}
+        label={'fullName'}
+        register={register}
+        name={'fullName'}
+        errors={errors}
+      />
+
+      <FormInput<ProfileFormFields>
+        id={'lookingForAJobDescription'}
+        label={'lookingForAJobDescription'}
+        register={register}
+        name={'lookingForAJobDescription'}
+        errors={errors}
+      />
+
+      <FormInput<ProfileFormFields>
+        id={'lookingForAJob'}
+        label={'lookingForAJob'}
+        register={register}
+        name={'lookingForAJob'}
+        errors={errors}
+        type={'checkbox'}
+      />
+
+      {Object.keys(profile.contacts).map(title => {
+        return (
+          <FormInput<ProfileFormFields>
+            key={title}
+            id={title}
+            label={title}
+            register={register}
+            //@ts-ignore
+            name={`contacts.${title}`}
+            errors={errors}
+          />
+        );
+      })}
+
       <button className='some' type='submit'>
         Submit
       </button>

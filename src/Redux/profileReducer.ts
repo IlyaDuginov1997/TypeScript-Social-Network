@@ -1,6 +1,8 @@
 import { GetProfileType } from 'src/Components/Profile/ProfileContainer';
 import { profileAPI } from 'src/API/API';
 import { Dispatch } from 'redux';
+import { ProfileFormFields } from 'src/Components/Profile/ProfileInfo/ProfileForm/ProfileForm';
+import { RootReduxState } from 'src/Redux/redux-store';
 
 export type PostsType = {
   id: number;
@@ -106,9 +108,10 @@ export function profileReducer(
     case CHANGE_PROFILE_PHOTO:
       return {
         ...state,
-        profile: state.profile !== null
-          ? { ...state.profile, photos: {...action.profilePhotos} }
-          : null,
+        profile:
+          state.profile !== null
+            ? { ...state.profile, photos: { ...action.profilePhotos } }
+            : null,
       };
     default:
       return state;
@@ -150,6 +153,13 @@ export function setUsersPhoto(profilePhotos: ProfilePhotoType): ChangeProfilePho
   };
 }
 
+export function updateProfile(profilePhotos: ProfilePhotoType): ChangeProfilePhotoType {
+  return {
+    type: CHANGE_PROFILE_PHOTO,
+    profilePhotos,
+  };
+}
+
 export const getProfileStatusThunk = (userId: number | null) => {
   return async (dispatch: Dispatch) => {
     const data = await profileAPI.getProfileStatus(userId);
@@ -180,6 +190,19 @@ export const updateProfilePhotoThunk = (file: File) => {
 
     if (data.resultCode === 0) {
       dispatch(setUsersPhoto(data.data.photos));
+    }
+  };
+};
+
+export const updateProfileDataThunk = (profileData: ProfileFormFields) => {
+  return async (dispatch: Dispatch<any>, getState: () => RootReduxState) => {
+    const userId = getState().auth.id;
+    const data = await profileAPI.updateProfile(profileData);
+
+    if (data.resultCode === 0) {
+      dispatch(getUserProfileThunk(userId));
+    } else {
+      return data.messages ? data.messages : 'something go wrong';
     }
   };
 };

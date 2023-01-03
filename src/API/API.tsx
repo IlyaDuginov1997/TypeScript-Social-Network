@@ -2,6 +2,7 @@ import axios from 'axios';
 import { UserType } from 'src/Redux/usersReducer';
 import { GetProfileType } from 'src/Components/Profile/ProfileContainer';
 import { ProfilePhotoType } from 'src/Redux/profileReducer';
+import { ProfileFormFields } from 'src/Components/Profile/ProfileInfo/ProfileForm/ProfileForm';
 
 type getUserAPIType = {
   error: null | string;
@@ -112,6 +113,14 @@ export const profileAPI = {
 
     return instance
       .put<commonType<{ photos: ProfilePhotoType }>>(`profile/photo`, formData, config)
+      .then(response => {
+        return response.data;
+      });
+  },
+
+  updateProfile(profileData: ProfileFormFields) {
+    return instance
+      .put<commonType>(`profile`, profileData)
       .then(response => {
         return response.data;
       });

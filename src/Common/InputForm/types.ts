@@ -1,6 +1,6 @@
 import {
   DeepMap,
-  FieldError,
+  FieldError, FieldErrors,
   Path,
   RegisterOptions,
   UnPackAsyncDefaultValues,
@@ -12,5 +12,6 @@ export type FormInputProps<TFormValues> = {
   name: Path<UnPackAsyncDefaultValues<TFormValues>>;
   rules?: RegisterOptions;
   register?: UseFormRegister<TFormValues>;
-  errors?: Partial<DeepMap<TFormValues, FieldError>>;
+  // errors?: Partial<DeepMap<TFormValues, FieldError>>;
+  errors?: FieldErrors;
 } & Omit<InputProps, 'name'>;

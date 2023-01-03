@@ -6,7 +6,10 @@ import { ProfileStatus } from 'src/Components/Profile/ProfileInfo/ProfileStatus'
 import user from 'src/Assets/Images/user.jpg';
 import camera from 'src/Assets/Images/camera.svg';
 import { ProfileFormData } from 'src/Components/Profile/ProfileInfo/ProfileFormData/ProfileFormData';
-import { ProfileForm } from 'src/Components/Profile/ProfileInfo/ProfileForm/ProfileForm';
+import {
+  ProfileForm,
+  ProfileFormFields,
+} from 'src/Components/Profile/ProfileInfo/ProfileForm/ProfileForm';
 
 export type ProfileInfoPropsType = {
   profile: GetProfileType | null;
@@ -14,6 +17,7 @@ export type ProfileInfoPropsType = {
   updateProfileStatusThunk: (status: string) => void;
   updateProfilePhotoThunk: (file: File) => void;
   isOwner: boolean;
+  updateProfileDataThunk: (profileData: ProfileFormFields) => Promise<any>;
 };
 
 export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
@@ -22,6 +26,7 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
   updateProfileStatusThunk,
   updateProfilePhotoThunk,
   isOwner,
+  updateProfileDataThunk,
 }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
 
@@ -69,7 +74,7 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
         )}
 
         {editMode ? (
-          <ProfileForm editModeOff={editModeOff} profile={profile} isOwner={isOwner} />
+          <ProfileForm editModeOff={editModeOff} profile={profile} isOwner={isOwner} updateProfileDataThunk={updateProfileDataThunk}/>
         ) : (
           <ProfileFormData
             profile={profile}

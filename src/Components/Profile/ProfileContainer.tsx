@@ -1,15 +1,17 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
   getProfileStatusThunk,
   getUserProfileThunk,
+  updateProfileDataThunk,
   updateProfilePhotoThunk,
   updateProfileStatusThunk,
 } from 'src/Redux/profileReducer';
-import {RootReduxState} from 'src/Redux/redux-store';
+import { RootReduxState } from 'src/Redux/redux-store';
 import Profile from 'src/Components/Profile/Profile';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {compose} from 'redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import { ProfileFormFields } from 'src/Components/Profile/ProfileInfo/ProfileForm/ProfileForm';
 
 export type ContactsType = {
   facebook: string;
@@ -20,7 +22,7 @@ export type ContactsType = {
   youtube: null;
   github: string;
   mainLink: null;
-}
+};
 
 export type GetProfileType = {
   aboutMe: string;
@@ -53,6 +55,7 @@ type ProfileComponentType = {
   getProfileStatusThunk: (userId: number | null) => void;
   updateProfileStatusThunk: (status: string) => void;
   updateProfilePhotoThunk: (file: File) => void;
+  updateProfileDataThunk: (profileData: ProfileFormFields) => Promise<any>;
 };
 
 type ProfileComponentWithRouterPropsType = RouteComponentProps<PathParamsType> &
@@ -95,6 +98,7 @@ class ProfileComponent extends React.Component<ProfileComponentWithRouterPropsTy
         profile={this.props.profile}
         updateProfileStatusThunk={this.props.updateProfileStatusThunk}
         updateProfilePhotoThunk={this.props.updateProfilePhotoThunk}
+        updateProfileDataThunk={this.props.updateProfileDataThunk}
         profileStatus={this.props.profileStatus}
         isOwner={!this.props.match.params.userId}
         /*{...this.props}*/
@@ -117,6 +121,7 @@ export const ProfileContainer = compose<React.ComponentType>(
     getProfileStatusThunk,
     updateProfileStatusThunk,
     updateProfilePhotoThunk,
+    updateProfileDataThunk,
   }),
   withRouter,
 )(ProfileComponent);
