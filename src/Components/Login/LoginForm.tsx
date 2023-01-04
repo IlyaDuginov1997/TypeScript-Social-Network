@@ -5,27 +5,56 @@ import { maxLengthCreator, requiredField } from 'src/Utils/Validators/Validator'
 import classes from 'src/Components/Login/LoginForm.module.css';
 
 export type FormDataLoginType = {
-  login: string
-  password: string
-  rememberMe: boolean
-}
+  login: string;
+  password: string;
+  rememberMe: boolean;
+  captchaURL: string | null;
+};
 const maxLength30 = maxLengthCreator(30);
 
-export const LoginForm: React.FC<InjectedFormProps<FormDataLoginType>> = ({ handleSubmit, error }) => {
-
+export const LoginForm: React.FC<
+  InjectedFormProps<FormDataLoginType, { captchaURL: string | null }> & {
+    captchaURL: string | null;
+  }
+> = ({ handleSubmit, error, captchaURL }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div><Field component={Input} validate={[requiredField, maxLength30]} name={'login'}
-                    placeholder={'login'} /></div>
-        <div><Field component={Input} validate={[requiredField, maxLength30]} name={'password'} type={'password'}
-                    placeholder={'password'} /></div>
-        <div><Field component={Input} name={'rememberMe'} type={'checkbox'} />remember me</div>
         <div>
-          {error && <span className={classes.globalFormError}>
-                        {error}
-                    </span>}
+          <Field
+            component={Input}
+            validate={[requiredField, maxLength30]}
+            name={'login'}
+            placeholder={'login'}
+          />
         </div>
+        <div>
+          <Field
+            component={Input}
+            validate={[requiredField, maxLength30]}
+            name={'password'}
+            type={'password'}
+            placeholder={'password'}
+          />
+        </div>
+        <div>
+          <Field component={Input} name={'rememberMe'} type={'checkbox'} />
+          remember me
+        </div>
+
+        {captchaURL && <img src={captchaURL} alt='captchaURL' />}
+        {captchaURL && (
+          <div>
+            <Field
+              component={Input}
+              validate={[requiredField]}
+              name={'captchaURL'}
+              placeholder={'Captcha'}
+            />
+          </div>
+        )}
+
+        <div>{error && <span className={classes.globalFormError}>{error}</span>}</div>
         <div>
           <button> Login</button>
         </div>
@@ -34,4 +63,6 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataLoginType>> = ({ hand
   );
 };
 
-export const LoginReduxForm = reduxForm<FormDataLoginType>({ form: 'login' })(LoginForm);
+export const LoginReduxForm = reduxForm<FormDataLoginType, { captchaURL: string | null }>(
+  { form: 'login' },
+)(LoginForm);

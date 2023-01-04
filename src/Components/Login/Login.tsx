@@ -6,22 +6,20 @@ import { RootReduxState } from 'src/Redux/redux-store';
 import { Redirect } from 'react-router-dom';
 
 export type LoginPropsType = {
-  login: (
-    email: string,
-    password: string,
-    rememberMe: boolean,
-  ) => void
-  isAuth: boolean
-}
+  login: (email: string, password: string, rememberMe: boolean, captchaURL: string | null) => void;
+  isAuth: boolean;
+  captchaURL: string | null;
+};
 
 type MapStateToPropsType = {
-  isAuth: boolean
-}
+  isAuth: boolean;
+  captchaURL: string | null;
+};
 
 export function Login(props: LoginPropsType) {
   const onSubmit = (formData: FormDataLoginType) => {
-    const { login, password, rememberMe = false } = formData;
-    props.login(login, password, rememberMe);
+    const { login, password, rememberMe = false, captchaURL = null } = formData;
+    props.login(login, password, rememberMe, captchaURL);
   };
 
   if (props.isAuth) {
@@ -31,19 +29,17 @@ export function Login(props: LoginPropsType) {
   return (
     <div>
       <div>
-        <h1>
-          login
-        </h1>
+        <h1>login</h1>
       </div>
-      <LoginReduxForm onSubmit={onSubmit} />
+      <LoginReduxForm onSubmit={onSubmit} captchaURL={props.captchaURL}/>
     </div>
-
   );
 }
 
 let mapStateToProps = (state: RootReduxState): MapStateToPropsType => {
   return {
     isAuth: state.auth.isAuth,
+    captchaURL: state.auth.captchaURL,
   };
 };
 

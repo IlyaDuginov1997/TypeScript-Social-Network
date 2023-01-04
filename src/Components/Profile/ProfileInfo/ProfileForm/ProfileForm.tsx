@@ -6,7 +6,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { ProfileFormPropsType } from 'src/Components/Profile/ProfileInfo/ProfileForm/types';
 import { GetProfileType } from 'src/Components/Profile/ProfileContainer';
 
-export type ProfileFormFields = Omit<GetProfileType, 'userId' | 'photos'>;
+export type ProfileFormFields = Omit<GetProfileType, 'userId' | 'photos'> & {
+  notRegisteredInput: string;
+};
 
 export const ProfileForm: FC<ProfileFormPropsType> = ({
   profile,
@@ -21,6 +23,7 @@ export const ProfileForm: FC<ProfileFormPropsType> = ({
     setError,
   } = useForm<ProfileFormFields>({
     resolver: yupResolver(validationSchema.profile),
+    defaultValues: {...profile}
   });
 
   const onSubmit = handleSubmit(async data => {
@@ -28,6 +31,7 @@ export const ProfileForm: FC<ProfileFormPropsType> = ({
 
     if (errorMessages) {
       console.log('we have some errors: ', errorMessages);
+      setError('notRegisteredInput', { type: 'custom', message: 'Something go wrong' });
     } else {
       editModeOff();
     }
@@ -82,8 +86,14 @@ export const ProfileForm: FC<ProfileFormPropsType> = ({
         );
       })}
 
+      {errors.notRegisteredInput?.message && <div>{errors.notRegisteredInput?.message}</div>}
+
       <button className='some' type='submit'>
         Submit
+      </button>
+
+      <button type='button' onClick={() => editModeOff()}>
+        Go back
       </button>
     </form>
   );

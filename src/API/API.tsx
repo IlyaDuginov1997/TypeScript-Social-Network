@@ -54,9 +54,9 @@ export const authAPI = {
       return response.data;
     });
   },
-  login(email: string, password: string, rememberMe: boolean) {
+  login(email: string, password: string, rememberMe: boolean, captcha: string | null) {
     return instance
-      .post<commonType<{ userId: string }>>(`auth/login`, { email, password, rememberMe })
+      .post<commonType<{ userId: string }>>(`auth/login`, { email, password, rememberMe, captcha })
       .then(response => {
         return response.data;
       });
@@ -119,10 +119,16 @@ export const profileAPI = {
   },
 
   updateProfile(profileData: ProfileFormFields) {
-    return instance
-      .put<commonType>(`profile`, profileData)
-      .then(response => {
-        return response.data;
-      });
+    return instance.put<commonType>(`profile`, profileData).then(response => {
+      return response.data;
+    });
+  },
+};
+
+export const securityAPI = {
+  getCaptchaURL() {
+    return instance.get<{url: string}>(`security/get-captcha-url`).then(response => {
+      return response.data;
+    });
   },
 };
